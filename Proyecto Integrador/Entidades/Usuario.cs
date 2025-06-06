@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class Class1
+    public class Usuario
     {
+        public int Id {  get; set; }
+        public string Mail { get; set; }
+        public string Contraseña { get; set; }
     }
 }
