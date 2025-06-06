@@ -31,8 +31,9 @@ namespace Proyecto_Integrador
                     Session["usuario"] = usuario;
                     Session["idUsuario"] = idUsuario;
 
-                    
-                    Response.Redirect("Inicio.aspx");
+
+                    //Response.Redirect("");
+                    lblError.Text = "Ingreso correcto, en construccion";
                 }
                 else
                 {
