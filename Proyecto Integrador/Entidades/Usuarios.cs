@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class Usuario
+    public class Usuarios
     {
-        public int Id {  get; set; }
-        public string Mail { get; set; }
+        public int Id_Usuario {  get; set; }
+        public string Usuario { get; set; }
         public string Contraseña { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace Entidades
 {
     public class Mesa
     {
-        public int id_mesa { get; set; }
-        public int NumeroMesa { get; set; }
+        public int Id_mesa { get; set; }
+        public int Nro_Mesa { get; set; }
 
-        public int NumeroLegajo { get; set; }
+        public int Nro_Legajo { get; set; }
 
-        public int id_estado {  get; set; }
+        public int Id_Estado {  get; set; }
     }
 }

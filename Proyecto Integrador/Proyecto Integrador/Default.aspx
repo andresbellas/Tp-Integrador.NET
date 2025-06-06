@@ -13,6 +13,7 @@
             <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control mb-3" Placeholder="Contraseña" />
 
             <asp:Button ID="btnLogin" runat="server" Text="Ingresar" CssClass="btn btn-primary w-100" OnClick="btnLogin_Click" />
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger" />
         </div>
     </div>
 </asp:Content>

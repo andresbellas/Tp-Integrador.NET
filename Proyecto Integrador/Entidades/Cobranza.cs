@@ -10,7 +10,9 @@ namespace Entidades
     {
         public int id_cobranza { get; set; }
 
-        public int id_pedido { get; set; }
+        public int Id_Pago { get; set; }
+
+        public int Id_Pedido { get; set; }
 
         public float Total { get; set; }
 

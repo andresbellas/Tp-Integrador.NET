@@ -7,12 +7,13 @@ using System.Xml.Schema;
 
 namespace Entidades
 {
-    public class ItemxPedido
+    public class ItemPedidos
     {
 
         public int Id_item {  get; set; }
+        public int Id_Pedido { get; set; }
 
-        public int Id_Insumo { get; set; }
+        public int Sku { get; set; }
 
         public int Cantidad { get; set; }
 

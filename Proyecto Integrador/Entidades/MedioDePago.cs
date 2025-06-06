@@ -9,9 +9,11 @@ namespace Entidades
     public class MedioDePago
     {
 
-        public int id_pago { get; set; }        
+        public int Id_Pago { get; set; }        
 
-        public string NombreCliente { get; set; }
+        public string Nombre_Pago { get; set; }
+
+        public string Descripcion { get; set; }
 
         public bool habilitado { get; set; }
     }

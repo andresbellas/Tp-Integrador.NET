@@ -8,8 +8,8 @@ namespace Entidades
 {
     public class Estado
     {
-       public int id_estado {get; set;}
-        public string Nombre_estado {get; set;}
+       public int Id_Estado { get; set;}
+        public string Nombre_Estado { get; set;}
        public string Descripcion {get; set;}
     }
 }
