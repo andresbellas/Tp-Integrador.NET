@@ -44,5 +44,108 @@ namespace Logica
                 sql.cerrarConexion();
             }
         }
+
+        public void AgregarEstado(Estado estado)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("INSERT INTO Estado (Nombre_Estado, Descripcion) VALUES (@Nombre, @Descripcion)");
+                conexion.SetParametros("@Nombre", estado.Nombre_Estado);
+                conexion.SetParametros("@Descripcion", estado.Descripcion);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void ModificarEstado(Estado estado)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("UPDATE Estado SET Nombre_Estado = @Nombre, Descripcion = @Descripcion WHERE Id_Estado = @Id");
+                conexion.SetParametros("@Nombre", estado.Nombre_Estado);
+                conexion.SetParametros("@Descripcion", estado.Descripcion);
+                conexion.SetParametros("@Id", estado.Id_Estado);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void EliminarEstado(int idEstado)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("DELETE FROM Estado WHERE Id_Estado = @Id");
+                conexion.SetParametros("@Id", idEstado);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

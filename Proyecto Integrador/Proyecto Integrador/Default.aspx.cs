@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Logica;
 
 namespace Proyecto_Integrador
 {
@@ -23,7 +24,7 @@ namespace Proyecto_Integrador
 
             try
             {
-                Logica.Logica.L_Usuario logicaUsuario = new Logica.Logica.L_Usuario();
+                L_Usuario logicaUsuario = new L_Usuario();
 
                 if (logicaUsuario.Login(usuario, contraseña, out idUsuario))
                 {
@@ -31,8 +32,8 @@ namespace Proyecto_Integrador
                     Session["usuario"] = usuario;
                     Session["idUsuario"] = idUsuario;
 
-
-                    //Response.Redirect("");
+                    // Tendria que redirigir a gerente si es un gerente.aspx y a mesero.aspx si es mesero
+                    Response.Redirect("");
                     lblError.Text = "Ingreso correcto, en construccion";
                 }
                 else

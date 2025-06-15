@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.Logica
+namespace Logica
 {
     public class L_Usuario
     {
