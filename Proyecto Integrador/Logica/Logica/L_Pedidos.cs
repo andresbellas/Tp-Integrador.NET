@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica
 {
-    internal class L_Pedidos
+    public class L_Pedidos
     {
     }
 }

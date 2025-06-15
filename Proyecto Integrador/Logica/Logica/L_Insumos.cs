@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica
 {
-    internal class L_Insumos
+    public class L_Insumos
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica
 {
-    internal class L_Cobranza
+    public class L_Cobranza
     {
     }
 }
