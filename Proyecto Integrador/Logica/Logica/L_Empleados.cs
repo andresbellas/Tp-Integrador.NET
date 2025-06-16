@@ -1,12 +1,158 @@
-﻿using System;
+﻿using Entidades;
+using Logica.SQL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Logica
 {
     public class L_Empleados
     {
+
+        public List<Empleados> ListarEmpleados()
+        {
+            List<Empleados> lista = new List<Empleados>();
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("SELECT e.Id_Empleado, e.Nro_Legajo, e.Nombre, e.Apellido, e.Id_Usuario, e.Id_Rol, e.Baja, u.Usuario AS NombreUsuario, u.Contraseña, r.Nombre_Rol, r.Descripcion FROM Empleados e JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario JOIN Rol r ON e.Id_Rol = r.Id_Rol");
+                conexion.Ejecutar();
+
+                while (conexion.Lector.Read())
+                {
+                    Empleados aux = new Empleados();
+                    aux.id_empleado = (int)conexion.Lector["Id_Empleado"];
+                    aux.Nro_Legajo = (int)conexion.Lector["Nro_Legajo"];
+                    aux.Nombre = (string)conexion.Lector["Nombre"];
+                    aux.Apellido = (string)conexion.Lector["Apellido"];
+                    aux.baja = (bool)conexion.Lector["Baja"];
+
+                    aux.UsuarioEmpleado = new Usuarios
+                    {
+                        Id_Usuario = (int)conexion.Lector["Id_Usuario"],
+                        Usuario = (string)conexion.Lector["NombreUsuario"],
+                        Contraseña = (string)conexion.Lector["Contraseña"]
+                    };
+
+                    aux.RolEmpleado = new Rol
+                    {
+                        id_rol = (int)conexion.Lector["Id_Rol"],
+                        Nombre_rol = (string)conexion.Lector["Nombre_Rol"],
+                        Descripcion = (string)conexion.Lector["Descripcion"] 
+                    };
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void AgregarEmpleado(Empleados empleado)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("INSERT INTO Empleados (Nro_Legajo, Nombre, Apellido, Id_Usuario, Id_Rol, Baja) VALUES (@Nro_Legajo, @Nombre, @Apellido, @Id_Usuario, @Id_Rol, @Baja)");
+                conexion.SetParametros("@Nro_Legajo", empleado.Nro_Legajo);
+                conexion.SetParametros("@Nombre", empleado.Nombre);
+                conexion.SetParametros("@Apellido", empleado.Apellido);
+                conexion.SetParametros("@Id_Usuario", empleado.UsuarioEmpleado.Id_Usuario);
+                conexion.SetParametros("@Id_Rol", empleado.RolEmpleado.id_rol);
+                conexion.SetParametros("@Baja", empleado.baja);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void ModificarEmpleado(Empleados empleado)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("UPDATE Empleados SET Nro_Legajo = @Nro_Legajo, Nombre = @Nombre, Apellido = @Apellido, Id_Usuario = @Id_Usuario, Id_Rol = @Id_Rol, Baja = @Baja WHERE Id_Empleado = @Id_Empleado");
+                conexion.SetParametros("@Id_Empleado", empleado.id_empleado);
+                conexion.SetParametros("@Nro_Legajo", empleado.Nro_Legajo);
+                conexion.SetParametros("@Nombre", empleado.Nombre);
+                conexion.SetParametros("@Apellido", empleado.Apellido);
+                conexion.SetParametros("@Id_Usuario", empleado.UsuarioEmpleado.Id_Usuario);
+                conexion.SetParametros("@Id_Rol", empleado.RolEmpleado.id_rol);
+                conexion.SetParametros("@Baja", empleado.baja);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void EliminarEmpleado(int id)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("DELETE FROM Empleados WHERE Id_Empleado = @Id");
+                conexion.SetParametros("@Id", id);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+        public void BajaLogicaEmpleado(int id)
+        {
+            Sql conexion = new Sql();
+
+            try
+            {
+                conexion.Consulta("UPDATE Empleados SET Baja = 1 WHERE Id_Empleado = @Id");
+                conexion.SetParametros("@Id", id);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+
+
+
     }
 }
