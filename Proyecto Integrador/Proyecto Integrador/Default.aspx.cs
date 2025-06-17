@@ -33,8 +33,8 @@ namespace Proyecto_Integrador
                     Session["idUsuario"] = idUsuario;
 
                     // Tendria que redirigir a gerente si es un gerente.aspx y a mesero.aspx si es mesero
-                    Response.Redirect("");
-                    lblError.Text = "Ingreso correcto, en construccion";
+                    Response.Redirect("Gerente.aspx");
+                    //lblError.Text = "Ingreso correcto, en construccion";
                 }
                 else
                 {

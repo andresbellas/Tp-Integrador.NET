@@ -5,12 +5,12 @@
     <div class="container mt-4">
         <h2>Gestión de Mesas</h2>
         
-        <asp:GridView ID="gvMesas" runat="server" AutoGenerateColumns="false" CssClass="table table-striped" DataKeyNames="MesaId" AllowPaging="true" PageSize="10">
+        <asp:GridView ID="gvMesas" runat="server" AutoGenerateColumns="false" CssClass="table table-striped" DataKeyNames="Id_mesa" AllowPaging="true" PageSize="10">
             <Columns>
-                <asp:BoundField DataField="MesaId" HeaderText="ID Mesa" />
-                <asp:BoundField DataField="NumeroMesa" HeaderText="Número" />
-                <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                <asp:BoundField DataField="NumeroLegajo" HeaderText="Legajo Mesero" />
+                  <asp:BoundField DataField="Id_mesa" HeaderText="Id Mesa" />
+                  <asp:BoundField DataField="Nro_Mesa" HeaderText="Número Mesa" />
+                   <asp:BoundField DataField="Nro_Legajo" HeaderText="Número Legajo" />
+                   <asp:BoundField DataField="Id_Estado" HeaderText="Estado" />
                 <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
             </Columns>
         </asp:GridView>

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Logica
 {
     
@@ -27,11 +26,11 @@ namespace Logica
                     {
                         Mesa aux = new Mesa();
                         aux.Id_mesa = (int)conexion.Lector["Id_Mesa"];
-                        aux.Nro_Mesa = (int)conexion.Lector["Nro_Mesa"];
-                        aux.Nro_Legajo = (int)conexion.Lector["Nro_Legajo"];
-                        aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
+                    aux.Nro_Mesa = Convert.ToInt32(conexion.Lector["Nro_Mesa"]);
+                    aux.Nro_Legajo = conexion.Lector["Nro_Legajo"] == DBNull.Value ? 0 : Convert.ToInt32(conexion.Lector["Nro_Legajo"]);
+                    aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
 
-                        lista.Add(aux);
+                            lista.Add(aux);
                     }
 
                     return lista;
