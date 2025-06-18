@@ -26,7 +26,7 @@ namespace Logica
                 {
                     Empleados aux = new Empleados();
                     aux.id_empleado = (int)conexion.Lector["Id_Empleado"];
-                    aux.Nro_Legajo = (int)conexion.Lector["Nro_Legajo"];
+                    aux.Nro_Legajo = Convert.ToInt32(conexion.Lector["Nro_Legajo"]);
                     aux.Nombre = (string)conexion.Lector["Nombre"];
                     aux.Apellido = (string)conexion.Lector["Apellido"];
                     aux.baja = (bool)conexion.Lector["Baja"];

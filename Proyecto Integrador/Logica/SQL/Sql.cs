@@ -26,10 +26,10 @@ namespace Logica.SQL
             try
             {
                 //Conexion para base de datos con declaracion de usuario especifico con login de sql
-                conexion.ConnectionString = "Server=ULARIAGA-BRAIAN\\LOCALHOST; Database= Restaurante; User Id= sa; Password=Super123.adm "; /// Brian
+                //conexion.ConnectionString = "Server=ULARIAGA-BRAIAN\\LOCALHOST; Database= Restaurante; User Id= sa; Password=Super123.adm "; /// Brian
 
                 //Conexion para base de datos local con login de wind
-                //conexion.ConnectionString = "Server=.\\SQLEXPRESS;  Database= Restaurante; integrated security= true"; /// Andres & Nico
+                conexion.ConnectionString = "Server=.\\SQLEXPRESS;  Database= Restaurante; integrated security= true"; /// Andres & Nico
 
 
             }
