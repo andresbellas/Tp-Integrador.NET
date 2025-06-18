@@ -67,14 +67,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Baja.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Gerente.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Icons\UserDefault.svg" />
+    <Content Include="Icons\UserGerente.svg" />
+    <Content Include="Icons\UserMesero.svg" />
     <Content Include="Mesero.aspx" />
     <Content Include="Pedido.aspx" />
     <Content Include="Web.config" />
+    <Content Include="ABM_Empleados.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Baja.aspx.cs">
+      <DependentUpon>Baja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Baja.aspx.designer.cs">
+      <DependentUpon>Baja.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -113,6 +125,13 @@
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ABM_Empleados.aspx.cs">
+      <DependentUpon>ABM_Empleados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABM_Empleados.aspx.designer.cs">
+      <DependentUpon>ABM_Empleados.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

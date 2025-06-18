@@ -30,7 +30,7 @@ namespace Proyecto_Integrador
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAsignarMesero;
+        protected global::System.Web.UI.WebControls.LinkButton btnAsignarMesero;
 
         /// <summary>
         /// Control btnDesasignarMesero.
@@ -39,7 +39,7 @@ namespace Proyecto_Integrador
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDesasignarMesero;
+        protected global::System.Web.UI.WebControls.LinkButton btnDesasignarMesero;
 
         /// <summary>
         /// Control btnAbrirPedido.
@@ -48,7 +48,7 @@ namespace Proyecto_Integrador
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAbrirPedido;
+        protected global::System.Web.UI.WebControls.LinkButton btnAbrirPedido;
 
         /// <summary>
         /// Control btnCancelarPedido.
@@ -57,7 +57,7 @@ namespace Proyecto_Integrador
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelarPedido;
+        protected global::System.Web.UI.WebControls.LinkButton btnCancelarPedido;
 
         /// <summary>
         /// Control btnCerrarPedido.
@@ -66,6 +66,6 @@ namespace Proyecto_Integrador
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCerrarPedido;
+        protected global::System.Web.UI.WebControls.LinkButton btnCerrarPedido;
     }
 }
