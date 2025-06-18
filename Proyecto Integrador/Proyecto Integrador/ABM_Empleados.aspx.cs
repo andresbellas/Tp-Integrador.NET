@@ -26,6 +26,7 @@ namespace Proyecto_Integrador
                     ModoABM = modo;
                     EjecutarAccion(modo);
                 }
+                CargarRoles();
             }
         }
 
@@ -52,7 +53,7 @@ namespace Proyecto_Integrador
                 case "altaEmpl":
                     HabilitarCamposEmpleado(true);
                     MostrarCamposEmpleado(true);
-                    MostrarCamposUsuario(false);
+                    MostrarCamposUsuario(true);
                     break;
 
                 case "modificacionEmpl":
@@ -110,28 +111,39 @@ namespace Proyecto_Integrador
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             L_Empleados logica = new L_Empleados();
-            Empleados emp = ObtenerEmpleadoDelFormulario();
+            Empleados emp;
+
+            L_Usuario l_usuario = new L_Usuario();
+            Usuarios nuevoUsuario = ObtenerUsuarioDelFormulario();
 
             try
             {
                 switch (ModoABM)
                 {
                     case "altaEmpl":
+                       
+                        int idUsuario = l_usuario.AgregarUsuario(nuevoUsuario);
+                        emp = ObtenerEmpleadoDelFormulario(idUsuario);
                         logica.AgregarEmpleado(emp);
                         lblMensaje.Text = "Empleado agregado correctamente.";
+                        btnAceptarConfirmacion.Visible = true; 
+                        btnGuardar.Enabled = false;           
+                        
                         break;
 
                     case "modificacionEmpl":
-                        logica.ModificarEmpleado(emp);
+                        //logica.ModificarEmpleado();
                         lblMensaje.Text = "Empleado modificado correctamente.";
+                        LimpiarFormulario();
                         break;
 
                     case "bajaEmpl":
-                        logica.BajaLogicaEmpleado(emp.id_empleado);
+                        //logica.BajaLogicaEmpleado(emp.id_empleado);
                         lblMensaje.Text = "Empleado dado de baja lógicamente.";
+                        LimpiarFormulario();
                         break;
 
-                    case "altaLogeoEmpl":
+                    case "modificarLogeoEmpl":
                         // Agregar la lógica real para guardar usuario
                         lblMensaje.Text = "Alta de usuario registrada (lógica no implementada).";
                         break;
@@ -145,6 +157,8 @@ namespace Proyecto_Integrador
             {
                 lblMensaje.Text = "Error: " + ex.Message;
             }
+
+            
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
@@ -166,7 +180,7 @@ namespace Proyecto_Integrador
             // Cargar rol si usas DropDownList para roles
         }
 
-        private Empleados ObtenerEmpleadoDelFormulario()
+        private Empleados ObtenerEmpleadoDelFormulario(int idUsuario)
         {
             return new Empleados
             {
@@ -177,14 +191,43 @@ namespace Proyecto_Integrador
                 baja = false,
                 UsuarioEmpleado = new Usuarios
                 {
-                    Usuario = txtUsuario.Text,
-                    Contraseña = txtContraseña.Text
+                    Id_Usuario = idUsuario
                 },
                 RolEmpleado = new Rol
                 {
-                    id_rol = 1 // O tomar del DropDownList si tienes
+                    id_rol = 1 
                 }
             };
+        }
+
+
+        private Usuarios ObtenerUsuarioDelFormulario()
+        {
+            return new Usuarios
+            {
+                Usuario = txtUsuario.Text,
+                Contraseña = txtContraseña.Text
+            };
+        }
+
+        private void CargarRoles()
+        {
+            L_Rol logicaRol = new L_Rol();
+            ddlRoles.DataSource = logicaRol.ListarRoles();
+            ddlRoles.DataTextField = "Nombre_rol"; 
+            ddlRoles.DataValueField = "id_rol";    
+            ddlRoles.DataBind();
+        }
+
+        protected void btnAceptarConfirmacion_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            btnGuardar.Visible = false; 
+            btnVolver.Visible = false;
+            btnAceptarConfirmacion.Visible = false;
+            btnGuardar.Enabled = true;
+            lblMensaje.Text = "";
+            MostrarFormulario(true);
         }
 
         private void LimpiarFormulario()
@@ -202,6 +245,8 @@ namespace Proyecto_Integrador
         private void MostrarFormulario(bool visible)
         {
             PanelFormulario.Visible = visible;
+            btnGuardar.Visible = true;
+            btnVolver.Visible = true;
         }
 
         private void MostrarCamposEmpleado(bool visible)

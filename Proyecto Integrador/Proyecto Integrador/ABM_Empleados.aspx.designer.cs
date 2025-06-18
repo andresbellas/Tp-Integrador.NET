@@ -132,6 +132,24 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.TextBox txtLegajo;
 
         /// <summary>
+        /// Control divRol.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRol;
+
+        /// <summary>
+        /// Control ddlRoles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRoles;
+
+        /// <summary>
         /// Control divUsuario.
         /// </summary>
         /// <remarks>
@@ -184,5 +202,14 @@ namespace Proyecto_Integrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVolver;
+
+        /// <summary>
+        /// Control btnAceptarConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptarConfirmacion;
     }
 }

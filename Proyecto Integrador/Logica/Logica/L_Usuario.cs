@@ -43,15 +43,37 @@ namespace Logica
             }
         }
 
-        public void AgregarUsuario(Usuarios usuario)
+        //public void AgregarUsuario(Usuarios usuario)
+        //{
+        //    Sql conexion = new Sql();
+        //    try
+        //    {
+        //        conexion.Consulta("INSERT INTO Usuarios (Usuario, Contraseña) VALUES (@Usuario, @Contraseña)");
+        //        conexion.SetParametros("@Usuario", usuario.Usuario);
+        //        conexion.SetParametros("@Contraseña", usuario.Contraseña);
+        //        conexion.EjecutarAccion();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        conexion.cerrarConexion();
+        //    }
+        //}
+
+        public int AgregarUsuario(Usuarios usuario)
         {
             Sql conexion = new Sql();
             try
             {
-                conexion.Consulta("INSERT INTO Usuarios (Usuario, Contraseña) VALUES (@Usuario, @Contraseña)");
+                conexion.Consulta("INSERT INTO Usuarios (Usuario, Contraseña) VALUES (@Usuario, @Contraseña); SELECT SCOPE_IDENTITY();");
                 conexion.SetParametros("@Usuario", usuario.Usuario);
                 conexion.SetParametros("@Contraseña", usuario.Contraseña);
-                conexion.EjecutarAccion();
+
+                object resultado = conexion.EjecutarScalar(); // Usamos Scalar para obtener el ID
+                return Convert.ToInt32(resultado);
             }
             catch (Exception ex)
             {
@@ -62,6 +84,7 @@ namespace Logica
                 conexion.cerrarConexion();
             }
         }
+
 
         public void ModificarUsuario(Usuarios usuario)
         {
