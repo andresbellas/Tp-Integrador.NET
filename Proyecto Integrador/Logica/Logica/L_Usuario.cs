@@ -136,5 +136,10 @@ namespace Logica
                 sql.cerrarConexion();
             }
         }
+
+
+     
+
+
     }
 }

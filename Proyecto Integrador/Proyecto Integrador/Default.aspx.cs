@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Entidades;
 using Logica;
 
 namespace Proyecto_Integrador
@@ -26,34 +27,32 @@ namespace Proyecto_Integrador
             {
                 L_Usuario logicaUsuario = new L_Usuario();
 
-                if (usuario == "gerente" && contraseña == "123")
-                {
-                    Session["usuario"] = "gerente";
-                    Session["idUsuario"] = 0;
-                    Session["nombre_rol"] = "gerente";
-
-
-                    Response.Redirect("Gerente.aspx");
-                    return;
-                }
-                else if (usuario == "mesero" && contraseña == "123")
-                {
-                    Session["usuario"] = "mesero";
-                    Session["idUsuario"] = 1;
-                    Session["nombre_rol"] = "mesero";
-
-
-                    Response.Redirect("Mesero.aspx");
-                    return;
-                }
+              
+                
 
                 if (logicaUsuario.Login(usuario, contraseña, out idUsuario))
                 {
                     Session["usuario"] = usuario;
                     Session["idUsuario"] = idUsuario;
+                    
+                    //Busco el empleado por el ID usuario
+                    L_Empleados logica = new L_Empleados();
+                    Empleados empleado = new Empleados();
+                    empleado = logica.EmpleadoPorIdUsuario(idUsuario);
 
-                    // Acá podrías validar el rol y redirigir según corresponda
-                    Response.Redirect("Gerente.aspx");
+                    if(empleado.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
+                    {
+                        Response.Redirect("Gerente.aspx");
+                    }
+                    else if(empleado.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
+                    {
+                        Response.Redirect("Mesero.aspx");
+                    }
+                    else
+                    {
+                        lblError.Text = "El rol " + empleado.RolEmpleado.Nombre_rol.ToUpper() + " no es valido";
+                    }
+                    
                 }
                 else
                 {
