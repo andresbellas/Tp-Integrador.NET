@@ -62,5 +62,10 @@
         <asp:Button runat="server" ID="btnVolver" Text="Volver" CssClass="btn btn-secondary mt-3 ms-2" OnClick="btnVolver_Click" />
         <asp:Button runat="server" ID="btnAceptarConfirmacion" Text="Aceptar" CssClass="btn btn-primary mt-3 ms-2" OnClick="btnAceptarConfirmacion_Click" Visible="false" />
 
+        <div class="form-check mb-3" id="divBaja" runat="server">
+            <asp:CheckBox runat="server" ID="chkBaja" CssClass="form-check-input" />
+            <label class="form-check-label" for="chkBaja">Empleado dado de baja</label>
+        </div>
+
     </asp:Panel>
 </asp:Content>

@@ -27,14 +27,36 @@ namespace Proyecto_Integrador
             {
                 L_Usuario logicaUsuario = new L_Usuario();
 
-              
-                
+                /* Para pruebaa */
+                if (usuario == "gerente" && contraseña == "123")
+                {
+                    Session["usuario"] = "gerente";
+                    Session["idUsuario"] = 0;
+                    Session["nombre_rol"] = "gerente";
 
+
+                    Response.Redirect("Gerente.aspx");
+                    return;
+                }
+                else if (usuario == "mesero" && contraseña == "123")
+                {
+                    Session["usuario"] = "mesero";
+                    Session["idUsuario"] = 1;
+                    Session["nombre_rol"] = "mesero";
+
+
+                    Response.Redirect("Mesero.aspx");
+                    return;
+                }
+
+
+                
                 if (logicaUsuario.Login(usuario, contraseña, out idUsuario))
                 {
-                    Session["usuario"] = usuario;
+
+                     Session["usuario"] = usuario;
                     Session["idUsuario"] = idUsuario;
-                    
+                   
                     //Busco el empleado por el ID usuario
                     L_Empleados logica = new L_Empleados();
                     Empleados empleado = new Empleados();

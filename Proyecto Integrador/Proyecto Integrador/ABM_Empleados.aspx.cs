@@ -80,16 +80,25 @@ namespace Proyecto_Integrador
                     break;
             }
         }
-
         protected void btnBuscarEmpleado_Click(object sender, EventArgs e)
         {
             string nombre = txtBuscarNombre.Text.Trim();
+
+            if (string.IsNullOrEmpty(nombre))
+            {
+                lblMensaje.Text = "Por favor ingresá un nombre para buscar.";
+                return;
+            }
+
             L_Empleados logica = new L_Empleados();
             Empleados encontrado = logica.ListarEmpleados().Find(emp => emp.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
 
             if (encontrado != null)
             {
                 CargarEmpleadoEnFormulario(encontrado);
+
+                ViewState["IdUsuario"] = encontrado.UsuarioEmpleado?.Id_Usuario ?? 0;
+
                 lblMensaje.Text = "";
 
                 if (ModoABM == "bajaEmpl")
@@ -100,13 +109,15 @@ namespace Proyecto_Integrador
                 {
                     HabilitarCamposEmpleado(true);
                 }
+
+                MostrarFormulario(true);
             }
             else
             {
                 lblMensaje.Text = "Empleado no encontrado.";
-                LimpiarFormulario();
             }
         }
+
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -115,26 +126,37 @@ namespace Proyecto_Integrador
 
             L_Usuario l_usuario = new L_Usuario();
             Usuarios nuevoUsuario = ObtenerUsuarioDelFormulario();
-
+            int idUsuario;
             try
             {
                 switch (ModoABM)
                 {
                     case "altaEmpl":
-                       
-                        int idUsuario = l_usuario.AgregarUsuario(nuevoUsuario);
+                        divBaja.Visible = false;
+
+                        idUsuario = l_usuario.AgregarUsuario(nuevoUsuario);
                         emp = ObtenerEmpleadoDelFormulario(idUsuario);
                         logica.AgregarEmpleado(emp);
                         lblMensaje.Text = "Empleado agregado correctamente.";
-                        btnAceptarConfirmacion.Visible = true; 
-                        btnGuardar.Enabled = false;           
-                        
+                        btnAceptarConfirmacion.Visible = true;
+                        btnGuardar.Enabled = false;
+
                         break;
 
                     case "modificacionEmpl":
-                        //logica.ModificarEmpleado();
-                        lblMensaje.Text = "Empleado modificado correctamente.";
-                        LimpiarFormulario();
+                        if (ViewState["IdUsuario"] != null)
+                        {
+                            idUsuario = (int)ViewState["IdUsuario"];
+                            emp = ObtenerEmpleadoDelFormulario(idUsuario);
+                            logica.ModificarEmpleado(emp);
+                            lblMensaje.Text = "Empleado modificado correctamente.";
+                            btnAceptarConfirmacion.Visible = true;
+                            btnGuardar.Enabled = false;
+                        }
+                        else
+                        {
+                            lblMensaje.Text = "No se pudo obtener el ID del usuario para modificar.";
+                        }
                         break;
 
                     case "bajaEmpl":
@@ -158,7 +180,7 @@ namespace Proyecto_Integrador
                 lblMensaje.Text = "Error: " + ex.Message;
             }
 
-            
+
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
@@ -177,8 +199,10 @@ namespace Proyecto_Integrador
             txtLegajo.Text = e.Nro_Legajo.ToString();
             txtUsuario.Text = e.UsuarioEmpleado?.Usuario;
             txtContraseña.Text = e.UsuarioEmpleado?.Contraseña;
-            // Cargar rol si usas DropDownList para roles
+            ddlRoles.SelectedValue = e.RolEmpleado.id_rol.ToString();
+            chkBaja.Checked = e.baja;
         }
+
 
         private Empleados ObtenerEmpleadoDelFormulario(int idUsuario)
         {
@@ -188,17 +212,20 @@ namespace Proyecto_Integrador
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Nro_Legajo = int.TryParse(txtLegajo.Text, out int leg) ? leg : 0,
-                baja = false,
+                baja = chkBaja.Checked,
                 UsuarioEmpleado = new Usuarios
                 {
-                    Id_Usuario = idUsuario
+                    Id_Usuario = idUsuario,
+                    Usuario = txtUsuario.Text,
+                    Contraseña = txtContraseña.Text
                 },
                 RolEmpleado = new Rol
                 {
-                    id_rol = 1 
+                    id_rol = int.Parse(ddlRoles.SelectedValue)
                 }
             };
         }
+
 
 
         private Usuarios ObtenerUsuarioDelFormulario()
@@ -214,15 +241,15 @@ namespace Proyecto_Integrador
         {
             L_Rol logicaRol = new L_Rol();
             ddlRoles.DataSource = logicaRol.ListarRoles();
-            ddlRoles.DataTextField = "Nombre_rol"; 
-            ddlRoles.DataValueField = "id_rol";    
+            ddlRoles.DataTextField = "Nombre_rol";
+            ddlRoles.DataValueField = "id_rol";
             ddlRoles.DataBind();
         }
 
         protected void btnAceptarConfirmacion_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
-            btnGuardar.Visible = false; 
+            btnGuardar.Visible = false;
             btnVolver.Visible = false;
             btnAceptarConfirmacion.Visible = false;
             btnGuardar.Enabled = true;
