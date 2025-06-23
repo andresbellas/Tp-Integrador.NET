@@ -19,7 +19,7 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT Id_Rol, Nombre_Rol, Descripcion FROM Rol");
+                conexion.Consulta("SELECT Id_Rol, Nombre_Rol, Descripcion FROM Rol where baja = 0");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())
@@ -89,7 +89,7 @@ namespace Logica
             Sql conexion = new Sql();
             try
             {
-                conexion.Consulta("DELETE FROM Rol WHERE Id_Rol = @Id");
+                conexion.Consulta("update rol set baja = 1 FROM Rol WHERE Id_Rol = @Id");
                 conexion.SetParametros("@Id", idRol);
                 conexion.EjecutarAccion();
             }

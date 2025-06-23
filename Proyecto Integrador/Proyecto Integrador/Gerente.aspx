@@ -39,12 +39,9 @@
                  
                         <asp:LinkButton runat="server" ID="btnAltaEmpleado" CssClass="dropdown-item" CommandArgument="altaEmpl" OnClick="Accion_Click">Alta Empleado</asp:LinkButton>
 
-                    
                         <asp:LinkButton runat="server" ID="btnModEmpleado" CssClass="dropdown-item" CommandArgument="modificacionEmpl" OnClick="Accion_Click">Modificar Empleado</asp:LinkButton>
                    
                         <asp:LinkButton runat="server" ID="btnBajaEmpleado" CssClass="dropdown-item" CommandArgument="bajaEmpl" OnClick="Accion_Click">Baja Empleado</asp:LinkButton>
-                    
-                        <asp:LinkButton runat="server" ID="btnAltaUsuarioEmpleado" CssClass="dropdown-item" CommandArgument="altaLogeoEmpl" OnClick="Accion_Click">Alta Usuario Empleado</asp:LinkButton>
                  
                 </ul>
             </div>

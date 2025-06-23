@@ -7,13 +7,39 @@
 
     <h2 class="mt-4 mb-3">Gestión de Empleados</h2>
 
-    <asp:Panel ID="PanelBuscarEmpleado" runat="server" CssClass="mb-3" Visible="false">
-        <div class="input-group">
-            <asp:TextBox runat="server" ID="txtBuscarNombre" CssClass="form-control" placeholder="Nombre del empleado a buscar"></asp:TextBox>
-            <asp:Button runat="server" ID="btnBuscarEmpleado" Text="Buscar" CssClass="btn btn-secondary" OnClick="btnBuscarEmpleado_Click" />
-        </div>
-    </asp:Panel>
 
+<asp:GridView ID="gvEmpleados" runat="server" 
+              AutoGenerateColumns="False"
+              DataKeyNames="id_empleado"
+              CssClass="table table-bordered"
+              OnRowCommand="gvEmpleados_RowCommand">
+    <Columns>
+        <asp:TemplateField HeaderText="Nombre">
+            <HeaderTemplate>
+                <asp:TextBox ID="txtFiltroNombre" runat="server" CssClass="form-control"
+                             AutoPostBack="true" OnTextChanged="Filtro_TextChanged" placeholder="Filtrar Nombre" />
+            </HeaderTemplate>
+            <ItemTemplate>
+                <%# Eval("Nombre") %>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Apellido">
+            <HeaderTemplate>
+                <asp:TextBox ID="txtFiltroApellido" runat="server" CssClass="form-control"
+                             AutoPostBack="true" OnTextChanged="Filtro_TextChanged" placeholder="Filtrar Apellido" />
+            </HeaderTemplate>
+            <ItemTemplate>
+                <%# Eval("Apellido") %>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:BoundField DataField="Nro_Legajo" HeaderText="Legajo" />
+        <asp:ButtonField Text="Seleccionar" CommandName="Seleccionar" ButtonType="Button" />
+    </Columns>
+</asp:GridView>
+
+    <asp:Button ID="btnVolverGrilla" runat="server" CssClass="btn btn-secondary mt-3" Text="Volver" OnClick="btnVolverGrilla_Click" />
 
     <asp:Label runat="server" ID="lblMensaje" CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
 
@@ -58,14 +84,14 @@
             <asp:TextBox runat="server" ID="txtContraseña" CssClass="form-control" TextMode="Password" />
         </div>
 
-        <asp:Button runat="server" ID="btnGuardar" Text="Guardar" CssClass="btn btn-success mt-3" OnClick="btnGuardar_Click" />
-        <asp:Button runat="server" ID="btnVolver" Text="Volver" CssClass="btn btn-secondary mt-3 ms-2" OnClick="btnVolver_Click" />
-        <asp:Button runat="server" ID="btnAceptarConfirmacion" Text="Aceptar" CssClass="btn btn-primary mt-3 ms-2" OnClick="btnAceptarConfirmacion_Click" Visible="false" />
-
         <div class="form-check mb-3" id="divBaja" runat="server">
             <asp:CheckBox runat="server" ID="chkBaja" CssClass="form-check-input" />
             <label class="form-check-label" for="chkBaja">Empleado dado de baja</label>
         </div>
+
+        <asp:Button runat="server" ID="btnGuardar" Text="Guardar" CssClass="btn btn-success mt-3" OnClick="btnGuardar_Click" />
+        <asp:Button runat="server" ID="btnVolver" Text="Volver" CssClass="btn btn-secondary mt-3 ms-2" OnClick="btnVolver_Click" />
+        <asp:Button runat="server" ID="btnAceptarConfirmacion" Text="Aceptar" CssClass="btn btn-primary mt-3 ms-2" OnClick="btnAceptarConfirmacion_Click" Visible="false" />
 
     </asp:Panel>
 </asp:Content>

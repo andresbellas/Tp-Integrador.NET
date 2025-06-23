@@ -64,9 +64,7 @@ namespace Proyecto_Integrador
                 case "bajaEmpl":
                     Response.Redirect("ABM_Empleados.aspx?modo=bajaEmpl");
                     break;
-                case "altaLogeoEmpl":
-                    Response.Redirect("ABM_Empleados.aspx?modo=altaLogeoEmpl");
-                    break;
+
 
              
                 case "altaIns":
@@ -76,18 +74,18 @@ namespace Proyecto_Integrador
                     // Modificación insumo
                     break;
 
-               
                 case "altaRol":
-                    // Alta rol
+                    Response.Redirect("ABM_Roles.aspx?modo=altaRol");
                     break;
                 case "modificacionRol":
-                    // Modificación rol
+                    Response.Redirect("ABM_Roles.aspx?modo=modificacionRol");
                     break;
                 case "eliminarRol":
-                    // Eliminar rol
+                    Response.Redirect("ABM_Roles.aspx?modo=eliminarRol");
                     break;
 
-                
+
+
                 case "altaMedPago":
                     // Alta medio de pago
                     break;

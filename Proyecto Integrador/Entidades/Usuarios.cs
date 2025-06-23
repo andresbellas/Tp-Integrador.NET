@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
+    [Serializable]
     public class Usuarios
     {
         public int Id_Usuario {  get; set; }

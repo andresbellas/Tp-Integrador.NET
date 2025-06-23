@@ -2,6 +2,8 @@
 using Entidades;
 using Logica;
 using System.Web.UI.WebControls;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Proyecto_Integrador
 {
@@ -18,7 +20,7 @@ namespace Proyecto_Integrador
             if (!IsPostBack)
             {
                 PanelFormulario.Visible = false;
-                PanelBuscarEmpleado.Visible = false;
+                //PanelBuscarEmpleado.Visible = false;
 
                 string modo = Request.QueryString["modo"];
                 if (!string.IsNullOrEmpty(modo))
@@ -45,78 +47,113 @@ namespace Proyecto_Integrador
 
             MostrarFormulario(true);
 
-            // Mostrar u ocultar panel de búsqueda según la acción
-            PanelBuscarEmpleado.Visible = accion == "modificacionEmpl" || accion == "bajaEmpl";
-
             switch (accion)
             {
                 case "altaEmpl":
                     HabilitarCamposEmpleado(true);
                     MostrarCamposEmpleado(true);
                     MostrarCamposUsuario(true);
+                    divBaja.Visible = false;
+                    chkBaja.Visible = false;
+                    btnVolverGrilla.Visible = false;
                     break;
 
                 case "modificacionEmpl":
-                    HabilitarCamposEmpleado(true);
-                    MostrarCamposEmpleado(true);
-                    MostrarCamposUsuario(true);
+                    PanelFormulario.Visible = false;
+                    CargarTodosLosEmpleados();
                     break;
 
                 case "bajaEmpl":
-                    HabilitarCamposEmpleado(false);
-                    MostrarCamposEmpleado(true);
-                    MostrarCamposUsuario(true);
-                    break;
-
-                case "altaLogeoEmpl":
-                    HabilitarCamposEmpleado(false);
-                    MostrarCamposEmpleado(false);
-                    MostrarCamposUsuario(true);
+                    PanelFormulario.Visible = false;
+                    CargarTodosLosEmpleados();
                     break;
 
                 default:
                     MostrarFormulario(false);
-                    PanelBuscarEmpleado.Visible = false;
+
                     break;
             }
         }
-        protected void btnBuscarEmpleado_Click(object sender, EventArgs e)
+
+        private List<Empleados> EmpleadosEnMemoria
         {
-            string nombre = txtBuscarNombre.Text.Trim();
+            get { return (List<Empleados>)ViewState["Empleados"] ?? new List<Empleados>(); }
+            set { ViewState["Empleados"] = value; }
+        }
 
-            if (string.IsNullOrEmpty(nombre))
-            {
-                lblMensaje.Text = "Por favor ingresá un nombre para buscar.";
-                return;
-            }
-
+        private void CargarTodosLosEmpleados()
+        {
             L_Empleados logica = new L_Empleados();
-            Empleados encontrado = logica.ListarEmpleados().Find(emp => emp.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+            EmpleadosEnMemoria = logica.ListarEmpleados();
+            gvEmpleados.DataSource = EmpleadosEnMemoria;
+            gvEmpleados.DataBind();
 
-            if (encontrado != null)
+        }
+
+        protected void Filtro_TextChanged(object sender, EventArgs e)
+        {
+            string filtroNombre = "";
+            string filtroApellido = "";
+
+            TextBox txtNombre = (TextBox)gvEmpleados.HeaderRow.FindControl("txtFiltroNombre");
+            TextBox txtApellido = (TextBox)gvEmpleados.HeaderRow.FindControl("txtFiltroApellido");
+
+            if (txtNombre != null) filtroNombre = txtNombre.Text.Trim();
+            if (txtApellido != null) filtroApellido = txtApellido.Text.Trim();
+
+            var filtrados = EmpleadosEnMemoria
+                .Where(x =>
+                    (string.IsNullOrEmpty(filtroNombre) || x.Nombre.IndexOf(filtroNombre, StringComparison.OrdinalIgnoreCase) >= 0) &&
+                    (string.IsNullOrEmpty(filtroApellido) || x.Apellido.IndexOf(filtroApellido, StringComparison.OrdinalIgnoreCase) >= 0)
+                )
+                .ToList();
+
+            gvEmpleados.DataSource = filtrados;
+            gvEmpleados.DataBind();
+        }
+        protected void gvEmpleados_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Seleccionar")
             {
-                CargarEmpleadoEnFormulario(encontrado);
+                int index = Convert.ToInt32(e.CommandArgument);
+                int idEmpleado = (int)gvEmpleados.DataKeys[index].Value;
 
-                ViewState["IdUsuario"] = encontrado.UsuarioEmpleado?.Id_Usuario ?? 0;
+                L_Empleados logica = new L_Empleados();
+                Empleados emp = logica.ListarEmpleados().FirstOrDefault(x => x.id_empleado == idEmpleado);
 
-                lblMensaje.Text = "";
-
-                if (ModoABM == "bajaEmpl")
+                if (emp != null)
                 {
-                    HabilitarCamposEmpleado(false);
-                }
-                else if (ModoABM == "modificacionEmpl")
-                {
-                    HabilitarCamposEmpleado(true);
-                }
+                    CargarEmpleadoEnFormulario(emp);
+                    ViewState["IdUsuario"] = emp.UsuarioEmpleado?.Id_Usuario ?? 0;
 
-                MostrarFormulario(true);
-            }
-            else
-            {
-                lblMensaje.Text = "Empleado no encontrado.";
+                    // Ocultar la grilla
+                    gvEmpleados.Visible = false;
+
+                    // Mostrar el formulario para edición
+                    MostrarFormulario(true);
+
+                    if (ModoABM == "bajaEmpl")
+                    {
+                        // En modo baja, campos deshabilitados excepto el checkbox de baja
+                        HabilitarCamposEmpleado(false);
+                        HabilitarCamposUsuario (false);
+                        MostrarCamposEmpleado(true);
+                        MostrarCamposUsuario(true);
+                        chkBaja.Enabled = true;  // Solo el checkbox habilitado
+                        
+                    }
+                    else
+                    {
+                        // En otros modos, todo habilitado
+                        HabilitarCamposEmpleado(true);
+                        MostrarCamposEmpleado(true);
+                        MostrarCamposUsuario(true);
+                        chkBaja.Enabled = false;
+                    }
+                }
             }
         }
+
 
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -127,6 +164,23 @@ namespace Proyecto_Integrador
             L_Usuario l_usuario = new L_Usuario();
             Usuarios nuevoUsuario = ObtenerUsuarioDelFormulario();
             int idUsuario;
+            // Validación de campos vacíos
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtLegajo.Text) ||
+                string.IsNullOrWhiteSpace(txtUsuario.Text) ||
+                string.IsNullOrWhiteSpace(txtContraseña.Text))
+            {
+                lblMensaje.Text = "Por favor completa todos los campos obligatorios.";
+                return;
+            }
+
+            if (!int.TryParse(txtLegajo.Text, out _))
+            {
+                lblMensaje.Text = "El campo Legajo debe ser un numero.";
+                return;
+            }
+
             try
             {
                 switch (ModoABM)
@@ -160,18 +214,12 @@ namespace Proyecto_Integrador
                         break;
 
                     case "bajaEmpl":
-                        //logica.BajaLogicaEmpleado(emp.id_empleado);
-                        lblMensaje.Text = "Empleado dado de baja lógicamente.";
+                        lblMensaje.Text = "Empleado dado de baja.";
                         LimpiarFormulario();
                         break;
 
-                    case "modificarLogeoEmpl":
-                        // Agregar la lógica real para guardar usuario
-                        lblMensaje.Text = "Alta de usuario registrada (lógica no implementada).";
-                        break;
-
                     default:
-                        lblMensaje.Text = "Acción inválida.";
+                        lblMensaje.Text = "Accion invalida.";
                         break;
                 }
             }
@@ -185,11 +233,31 @@ namespace Proyecto_Integrador
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
+            string modo = ModoABM;  // Guardamos el valor antes de limpiar
+
             LimpiarFormulario();
             ModoABM = null;
-            Response.Redirect("Gerente.aspx");
+            lblMensaje.Text = "";
 
+            if (modo == "altaEmpl")
+            {
+                Response.Redirect("Gerente.aspx");
+            }
+            else if (modo == "modificacionEmpl" || modo == "bajaEmpl")
+            {
+                Response.Redirect($"ABM_Empleados.aspx?modo={modo}");
+            }
+            else
+            {
+                Response.Redirect("ABM_Empleados.aspx");
+            }
         }
+
+        protected void btnVolverGrilla_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Gerente.aspx");
+        }
+
 
         private void CargarEmpleadoEnFormulario(Empleados e)
         {
@@ -266,7 +334,6 @@ namespace Proyecto_Integrador
             txtUsuario.Text = "";
             txtContraseña.Text = "";
             lblMensaje.Text = "";
-            PanelBuscarEmpleado.Visible = false;
         }
 
         private void MostrarFormulario(bool visible)
@@ -295,5 +362,12 @@ namespace Proyecto_Integrador
             txtUsuario.Visible = visible;
             txtContraseña.Visible = visible;
         }
+        private void HabilitarCamposUsuario(bool habilitar)
+        {
+            ddlRoles.Enabled = habilitar;   
+            txtUsuario.Enabled = habilitar;
+            txtContraseña.Enabled = habilitar;
+        }
+
     }
 }

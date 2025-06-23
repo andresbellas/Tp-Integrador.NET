@@ -15,31 +15,22 @@ namespace Proyecto_Integrador
     {
 
         /// <summary>
-        /// Control PanelBuscarEmpleado.
+        /// Control gvEmpleados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelBuscarEmpleado;
+        protected global::System.Web.UI.WebControls.GridView gvEmpleados;
 
         /// <summary>
-        /// Control txtBuscarNombre.
+        /// Control btnVolverGrilla.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarNombre;
-
-        /// <summary>
-        /// Control btnBuscarEmpleado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarEmpleado;
+        protected global::System.Web.UI.WebControls.Button btnVolverGrilla;
 
         /// <summary>
         /// Control lblMensaje.
@@ -186,6 +177,24 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.TextBox txtContraseña;
 
         /// <summary>
+        /// Control divBaja.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBaja;
+
+        /// <summary>
+        /// Control chkBaja.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkBaja;
+
+        /// <summary>
         /// Control btnGuardar.
         /// </summary>
         /// <remarks>
@@ -211,23 +220,5 @@ namespace Proyecto_Integrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAceptarConfirmacion;
-
-        /// <summary>
-        /// Control divBaja.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBaja;
-
-        /// <summary>
-        /// Control chkBaja.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkBaja;
     }
 }

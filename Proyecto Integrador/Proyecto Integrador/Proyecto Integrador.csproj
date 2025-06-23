@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Baja.aspx" />
+    <Content Include="ABM_Roles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Gerente.aspx" />
     <Content Include="Global.asax" />
@@ -80,12 +80,12 @@
     <Content Include="ABM_Empleados.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Baja.aspx.cs">
-      <DependentUpon>Baja.aspx</DependentUpon>
+    <Compile Include="ABM_Roles.aspx.cs">
+      <DependentUpon>ABM_Roles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Baja.aspx.designer.cs">
-      <DependentUpon>Baja.aspx</DependentUpon>
+    <Compile Include="ABM_Roles.aspx.designer.cs">
+      <DependentUpon>ABM_Roles.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
