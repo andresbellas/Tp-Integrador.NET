@@ -14,7 +14,13 @@ namespace Proyecto_Integrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if (!IsPostBack)
+            {
+                Session.Abandon();
+                txtUsername.Text = string.Empty;
+                txtPassword.Text = string.Empty;
+
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -62,7 +68,9 @@ namespace Proyecto_Integrador
                     Empleados empleado = new Empleados();
                     empleado = logica.EmpleadoPorIdUsuario(idUsuario);
 
-                    if(empleado.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
+                    Session["empleado"] = empleado;
+
+                    if (empleado.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
                     {
                         Response.Redirect("Gerente.aspx");
                     }

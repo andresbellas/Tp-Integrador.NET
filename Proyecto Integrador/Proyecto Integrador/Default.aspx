@@ -5,6 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        
         <div class="w-100" style="max-width: 400px;">
             <h2 class="text-center mb-4">Login</h2>
             <asp:Label ID="lblMessage" runat="server" CssClass="text-danger"></asp:Label>
