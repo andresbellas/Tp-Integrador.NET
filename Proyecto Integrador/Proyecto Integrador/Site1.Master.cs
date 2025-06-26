@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Entidades;
 
 namespace Proyecto_Integrador
 {
@@ -13,6 +14,8 @@ namespace Proyecto_Integrador
         {
             if (!IsPostBack)
             {
+
+
                 // Ocultar header en la página de login
                 string currentPage = System.IO.Path.GetFileName(Request.Path);
                 if (currentPage.ToLower() == "default.aspx")
@@ -24,7 +27,9 @@ namespace Proyecto_Integrador
                     // Mostrar solo si hay sesión
                     if (Session["usuario"] != null)
                     {
-                        lblUsuario.Text = "Hola, " + Session["usuario"].ToString();
+
+                        Empleados Logueado = (Empleados)Session["empleado"];
+                        lblUsuario.Text = "Hola, " + Logueado.Nombre.ToString();
                         pnlHeader.Visible = true;
                         // Obtener el rol y mostrar imagen correspondiente
                         string rol = Session["nombre_rol"] as string ?? "default";
@@ -32,10 +37,10 @@ namespace Proyecto_Integrador
                         switch (rol.ToLower())
                         {
                             case "mesero":
-                                imgUsuario.ImageUrl = "~/Icons/UserMesero.svg";
+                                imgUsuario.ImageUrl = "~/Icons/UserMesero.png";
                                 break;
                             case "gerente":
-                                imgUsuario.ImageUrl = "~/Icons/UserGerente.svg";
+                                imgUsuario.ImageUrl = "~/Icons/UserGerente.png";
                                 break;
                             default:
                                 imgUsuario.ImageUrl = "~/Icons/UserDefault.svg";

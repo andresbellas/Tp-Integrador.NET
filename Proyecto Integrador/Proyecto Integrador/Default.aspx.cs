@@ -21,6 +21,8 @@ namespace Proyecto_Integrador
                 txtPassword.Text = string.Empty;
 
             }
+           
+
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace Proyecto_Integrador
                     Session["idUsuario"] = 0;
                     Session["nombre_rol"] = "gerente";
 
-
+                    //CUIDADO BRAIAN, CAMBIE QUE EL CERRAR SESSION SEA CON EMPLEADO
                     Response.Redirect("Gerente.aspx");
                     return;
                 }
@@ -60,8 +62,8 @@ namespace Proyecto_Integrador
                 if (logicaUsuario.Login(usuario, contraseña, out idUsuario))
                 {
 
-                     Session["usuario"] = usuario;
-                    Session["idUsuario"] = idUsuario;
+                    Session["usuario"] = usuario;
+                  
                    
                     //Busco el empleado por el ID usuario
                     L_Empleados logica = new L_Empleados();

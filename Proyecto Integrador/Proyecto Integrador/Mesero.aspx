@@ -13,39 +13,46 @@
 </h2>
 
         <div class="p-3 border border-dark rounded shadow-sm bg-white">
-            <asp:GridView 
-                ID="gvMesas" 
-                runat="server" 
-                AutoGenerateColumns="false" 
-                CssClass="table table-striped table-bordered" 
-                DataKeyNames="Id_mesa" 
-                AllowPaging="true" 
-                PageSize="10"
-                GridLines="Both"
-                BorderStyle="Solid">
-                <HeaderStyle BackColor="#007bff" ForeColor="Black" Font-Bold="True" />
-                <RowStyle BackColor="#f9f9f9" />
+     <!-- contenedor con scroll vertical -->
+     <div style="max-height: 500px; overflow-y: auto;">
+         <asp:GridView 
+             ID="gvMesas" 
+             runat="server" 
+             AutoGenerateColumns="false" 
+             CssClass="table table-striped table-bordered" 
+             DataKeyNames="Id_mesa" 
+             AllowPaging="false"
+             GridLines="Both"
+             BorderStyle="Solid">
+             <HeaderStyle BackColor="#007bff" ForeColor="Black" Font-Bold="True" />
+             <RowStyle BackColor="#f9f9f9" />
                 <Columns>
                     <asp:BoundField DataField="Id_mesa" HeaderText="Id Mesa" />
                     <asp:BoundField DataField="Nro_Mesa" HeaderText="Número Mesa" />
-                    <asp:BoundField DataField="Id_Estado" HeaderText="Estado" />
-                    <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
+                   <asp:TemplateField HeaderText="Estado">
+        <ItemTemplate>
+            <%# Eval("Id_Estado").ToString() == "1" ? "Libre" : "Ocupado" %>
+        </ItemTemplate>
+    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acción">
+    <ItemTemplate>
+        <asp:Button 
+            ID="btnSeleccionar" 
+            runat="server" 
+            Text='<%# Eval("Id_Estado").ToString() == "1" ? "Abrir Pedido" : "Gestionar Pedido" %>'  
+            CssClass='<%# Eval("Id_Estado").ToString() == "1" ? "btn btn-success btn-sm" : "btn btn-danger btn-sm" %>' 
+            CommandName="accionMesa"
+            CommandArgument='<%# Eval("Id_mesa") %>'
+            CausesValidation="false" />
+    </ItemTemplate>
+</asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
 
         <div class="bg-primary text-white p-3 rounded mt-3 d-flex flex-wrap gap-3 justify-content-start shadow-sm">
 
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Mesas
-                </button>
-                <ul class="dropdown-menu">
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" ID="btnAbrirPedido" OnClick="Accion_Click" CommandArgument="abrirPed">Abrir Pedido</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" ID="btnCancelarPedido" OnClick="Accion_Click" CommandArgument="cancelarPed">Cancelar Pedido</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" ID="btnCerrarPedido" OnClick="Accion_Click" CommandArgument="cerrarPed">Cerrar Pedido</asp:LinkButton>
-                </ul>
-            </div>
+          
 
             <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

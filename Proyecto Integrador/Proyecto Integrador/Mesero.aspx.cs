@@ -16,6 +16,11 @@ namespace Proyecto_Integrador
             if (!IsPostBack)
             {
                 Empleados emp = Session["empleado"] as Empleados;
+
+                if(emp == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
                 lblNombreMesero.Text = emp.Nombre + " " + emp.Apellido;
 
                 if (emp != null)
