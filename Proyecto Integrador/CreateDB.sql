@@ -8,6 +8,7 @@ CREATE TABLE Rol (
     Id_Rol INT PRIMARY KEY IDENTITY(1,1),
     Nombre_Rol VARCHAR(100) NOT NULL,
     Descripcion VARCHAR(255)
+    Baja BIT NOT NULL DEFAULT 0,
 );
 
 CREATE TABLE Usuarios (
@@ -106,3 +107,71 @@ VALUES
 (1001, 'Braian', 'Ulariaga', 1, 1, 0),  -- Gerente
 (1002, 'Andres', 'Bellas', 2, 2, 0),    -- Mesero
 (1003, 'Nicolas', 'Mares', 3, 2, 0);    -- Mesero
+
+
+INSERT INTO Estado (Nombre_Estado, Descripcion) VALUES
+('Libre', 'Mesa disponible para ser ocupada'),     
+('Ocupado', 'Mesa actualmente ocupada');   
+
+
+INSERT INTO Mesa (Nro_Mesa, Nro_Legajo, Id_Estado) VALUES
+(1, NULL, 1),
+(2, NULL, 1),
+(3, NULL, 1),
+(4, NULL, 1),
+(5, NULL, 1);
+
+-- Mesas ocupadas (atendidas por Andrés Bellas, legajo 1002)
+INSERT INTO Mesa (Nro_Mesa, Nro_Legajo, Id_Estado) VALUES
+(6, 1002, 2),
+(7, 1002, 2),
+(8, 1002, 2),
+(9, 1002, 2),
+(10, 1002, 2);
+
+INSERT INTO MedioDePago (Nombre_Pago, Descripcion) VALUES
+('Efectivo', 'Pago en efectivo'),
+('Tarjeta de Crédito', 'Pago con tarjeta de crédito'),
+('Débito', 'Pago con tarjeta de débito');
+
+-- pedidos asociados a mesas ocupadas
+INSERT INTO Pedidos (Nro_Pedido, Fecha_Pedido, Id_Estado, Id_Mesa) VALUES
+(1001, '2025-06-27', 2, 6),
+(1002, '2025-06-27', 2, 7),
+(1003, '2025-06-27', 2, 8),
+(1004, '2025-06-27', 2, 9),
+(1005, '2025-06-27', 2, 10);
+
+
+INSERT INTO Insumos (Sku, Nombre, Precio, Cantidad) VALUES
+('BUR001', 'Hamburguesa Simple', 2000, 50),
+('PAP001', 'Papas Fritas', 1500, 100),
+('REF001', 'Refresco', 1000, 200);
+
+
+INSERT INTO ItemPedidos (Id_Pedido, Sku, Cantidad, Total) VALUES
+(1, 'BUR001', 1, 2000),
+(1, 'REF001', 1, 1000);
+
+-- pedido 1002
+INSERT INTO ItemPedidos (Id_Pedido, Sku, Cantidad, Total) VALUES
+(2, 'PAP001', 1, 1500),
+(2, 'REF001', 2, 2000);
+
+-- pedido 1003
+INSERT INTO ItemPedidos (Id_Pedido, Sku, Cantidad, Total) VALUES
+(3, 'BUR001', 2, 4000);
+
+-- pedido 1004
+INSERT INTO ItemPedidos (Id_Pedido, Sku, Cantidad, Total) VALUES
+(4, 'PAP001', 1, 1500),
+(4, 'BUR001', 1, 2000);
+
+-- pedido 1005
+INSERT INTO ItemPedidos (Id_Pedido, Sku, Cantidad, Total) VALUES
+(5, 'REF001', 3, 3000);
+
+
+INSERT INTO Cobranza (Id_Pago, Id_Pedido, Total) VALUES
+(1, 1, 3000),   -- efectivo, pedido 1001
+(2, 2, 3500);   -- tarjeta de crédito, pedido 1002

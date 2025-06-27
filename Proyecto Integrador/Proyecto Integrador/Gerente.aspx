@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" Inherits="Proyecto_Integrador.Gerente" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
-        <h2 class="mb-4">Gestión</h2>
-
+        <h2 class="mb-4">Gestión General Administracion </h2>
+         
         <!-- Fancy borde y sombra para la tabla -->
         <div class="p-3 border border-dark rounded shadow-sm bg-white">
             <!-- contenedor con scroll vertical -->

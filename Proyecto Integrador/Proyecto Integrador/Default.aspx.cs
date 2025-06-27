@@ -21,7 +21,7 @@ namespace Proyecto_Integrador
                 txtPassword.Text = string.Empty;
 
             }
-           
+          
 
         }
 

@@ -20,7 +20,13 @@ namespace Proyecto_Integrador
                 List<Mesa> mesas = new List<Mesa>();
                 L_Mesa l_Mesa = new L_Mesa();
                 mesas = l_Mesa.ListarMesas();
+                Empleados emp = Session["empleado"] as Empleados;
+                if (emp.RolEmpleado.id_rol != 1)
+                {
+                    Response.Redirect("Default.aspx");
+                }
 
+              
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
             }
