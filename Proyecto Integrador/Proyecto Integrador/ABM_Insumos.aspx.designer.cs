@@ -11,7 +11,7 @@ namespace Proyecto_Integrador
 {
 
 
-    public partial class ABM_Roles
+    public partial class ABM_Insumos
     {
 
         /// <summary>
@@ -33,40 +33,49 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.Panel PanelFormulario;
 
         /// <summary>
-        /// Control txtIdRol.
+        /// Control txtIdInsumo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdRol;
+        protected global::System.Web.UI.WebControls.TextBox txtIdInsumo;
 
         /// <summary>
-        /// Control txtNombreRol.
+        /// Control txtSku.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreRol;
+        protected global::System.Web.UI.WebControls.TextBox txtSku;
 
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control txtNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
-        /// Control chkBajaRol.
+        /// Control txtPrecio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkBajaRol;
+        protected global::System.Web.UI.WebControls.TextBox txtPrecio;
+
+        /// <summary>
+        /// Control txtCantidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
         /// Control btnGuardar.
@@ -87,13 +96,13 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
-        /// Control gvRoles.
+        /// Control gvInsumos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRoles;
+        protected global::System.Web.UI.WebControls.GridView gvInsumos;
 
         /// <summary>
         /// Control btnVolverGrilla.

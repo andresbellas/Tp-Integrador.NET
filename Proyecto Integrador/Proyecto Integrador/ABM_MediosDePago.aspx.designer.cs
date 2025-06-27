@@ -11,7 +11,7 @@ namespace Proyecto_Integrador
 {
 
 
-    public partial class ABM_Roles
+    public partial class ABM_MediosDePago
     {
 
         /// <summary>
@@ -33,22 +33,22 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.Panel PanelFormulario;
 
         /// <summary>
-        /// Control txtIdRol.
+        /// Control txtIdMedio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdRol;
+        protected global::System.Web.UI.WebControls.TextBox txtIdMedio;
 
         /// <summary>
-        /// Control txtNombreRol.
+        /// Control txtNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreRol;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
         /// Control txtDescripcion.
@@ -60,13 +60,13 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
-        /// Control chkBajaRol.
+        /// Control chkHabilitado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkBajaRol;
+        protected global::System.Web.UI.WebControls.CheckBox chkHabilitado;
 
         /// <summary>
         /// Control btnGuardar.
@@ -87,13 +87,13 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
-        /// Control gvRoles.
+        /// Control gvMediosPago.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRoles;
+        protected global::System.Web.UI.WebControls.GridView gvMediosPago;
 
         /// <summary>
         /// Control btnVolverGrilla.

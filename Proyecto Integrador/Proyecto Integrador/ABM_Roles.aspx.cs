@@ -59,6 +59,7 @@ namespace Proyecto_Integrador
 
         protected void gvRoles_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
         {
+            btnVolverGrilla.Visible = false;
             if (e.CommandName == "Seleccionar")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
@@ -154,12 +155,33 @@ namespace Proyecto_Integrador
             }
         }
 
-
-
         protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            string modo = ModoABM;  // Guardamos el valor antes de limpiar
+
+            LimpiarFormulario();
+            ModoABM = null;
+            lblMensaje.Text = "";
+
+            if (modo == "altaRol")
+            {
+                Response.Redirect("Gerente.aspx");
+            }
+            else if (modo == "modificacionRol" || modo == "eliminarRol")
+            {
+                Response.Redirect($"ABM_Roles.aspx?modo={modo}");
+            }
+            else
+            {
+                Response.Redirect("Gerente.aspx");
+            }
+        }
+
+        protected void btnVolverGrilla_Click(object sender, EventArgs e)
         {
             Response.Redirect("Gerente.aspx");
         }
+
 
         private void LimpiarFormulario()
         {

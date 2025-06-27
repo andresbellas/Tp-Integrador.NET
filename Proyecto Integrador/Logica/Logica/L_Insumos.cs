@@ -27,8 +27,8 @@ namespace Logica
                     aux.Id_insumo = (int)conexion.Lector["Id_Insumos"];
                     aux.Sku = (string)conexion.Lector["Sku"];
                     aux.Nombre = (string)conexion.Lector["Nombre"];
-                    aux.Precio = Convert.ToSingle(conexion.Lector["Precio"]);
-                    aux.Cantidad = (int)conexion.Lector["Cantidad"];
+                    aux.Precio = (double)(conexion.Lector["Precio"]);
+                    aux.Cantidad = Convert.ToInt32(conexion.Lector["Cantidad"]);
 
                     lista.Add(aux);
                 }

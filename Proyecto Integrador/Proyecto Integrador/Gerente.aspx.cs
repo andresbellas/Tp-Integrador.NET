@@ -53,8 +53,7 @@ namespace Proyecto_Integrador
                 case "gestionMesero":
                     // Lógica para gestionar meseros
                     break;
-
-              
+              //Empleados
                 case "altaEmpl":
                     Response.Redirect("ABM_Empleados.aspx?modo=altaEmpl");
                     break;
@@ -65,15 +64,20 @@ namespace Proyecto_Integrador
                     Response.Redirect("ABM_Empleados.aspx?modo=bajaEmpl");
                     break;
 
-
-             
                 case "altaIns":
-                    // Alta insumo
-                    break;
-                case "modificacionIns":
-                    // Modificación insumo
+                    Response.Redirect("ABM_Insumos.aspx?modo=altaInsumo");
                     break;
 
+                case "modificacionIns":
+                    Response.Redirect("ABM_Insumos.aspx?modo=modificacionInsumo");
+                    break;
+
+                case "listarInsumos":
+                    Response.Redirect("ABM_Insumos.aspx?modo=listarInsumos");
+                    break;
+
+
+                //ROL
                 case "altaRol":
                     Response.Redirect("ABM_Roles.aspx?modo=altaRol");
                     break;
@@ -83,17 +87,17 @@ namespace Proyecto_Integrador
                 case "eliminarRol":
                     Response.Redirect("ABM_Roles.aspx?modo=eliminarRol");
                     break;
-
-
-
+                //Pagos
                 case "altaMedPago":
-                    // Alta medio de pago
+                    Response.Redirect("ABM_MediosDePago.aspx?modo=altaMedio");
                     break;
+
                 case "modificacionMedPago":
-                    // Modificación medio de pago
+                    Response.Redirect("ABM_MediosDePago.aspx?modo=modificacionMedio");
                     break;
+
                 case "eliminarMedPago":
-                    // Eliminar medio de pago
+                    Response.Redirect("ABM_MediosDePago.aspx?modo=eliminarMedio");
                     break;
 
                 default:

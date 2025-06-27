@@ -19,7 +19,7 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT Id_Rol, Nombre_Rol, Descripcion FROM Rol");
+                conexion.Consulta("SELECT Id_Rol, Nombre_Rol, Descripcion FROM Rol  where baja = 0");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())

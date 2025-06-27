@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ABM_Insumos.aspx" />
+    <Content Include="ABM_MediosDePago.aspx" />
     <Content Include="ABM_Roles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Gerente.aspx" />
@@ -80,6 +82,20 @@
     <Content Include="ABM_Empleados.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM_Insumos.aspx.cs">
+      <DependentUpon>ABM_Insumos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABM_Insumos.aspx.designer.cs">
+      <DependentUpon>ABM_Insumos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ABM_MediosDePago.aspx.cs">
+      <DependentUpon>ABM_MediosDePago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABM_MediosDePago.aspx.designer.cs">
+      <DependentUpon>ABM_MediosDePago.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ABM_Roles.aspx.cs">
       <DependentUpon>ABM_Roles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -39,8 +39,6 @@
     </Columns>
 </asp:GridView>
 
-    <asp:Button ID="btnVolverGrilla" runat="server" CssClass="btn btn-secondary mt-3" Text="Volver" OnClick="btnVolverGrilla_Click" />
-
     <asp:Label runat="server" ID="lblMensaje" CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
 
 
@@ -50,9 +48,7 @@
             <asp:Label runat="server" ID="lblTituloFormulario" Text=""></asp:Label>
         </h4>
 
-        <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Visible="false" />
-
-        <div class="mb-3" id="divNombre" runat="server">
+            <div class="mb-3" id="divNombre" runat="server">
             <label for="txtNombre" class="form-label">Nombre</label>
             <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
         </div>
@@ -88,10 +84,10 @@
             <asp:CheckBox runat="server" ID="chkBaja" CssClass="form-check-input" />
             <label class="form-check-label" for="chkBaja">Empleado dado de baja</label>
         </div>
-
         <asp:Button runat="server" ID="btnGuardar" Text="Guardar" CssClass="btn btn-success mt-3" OnClick="btnGuardar_Click" />
         <asp:Button runat="server" ID="btnVolver" Text="Volver" CssClass="btn btn-secondary mt-3 ms-2" OnClick="btnVolver_Click" />
         <asp:Button runat="server" ID="btnAceptarConfirmacion" Text="Aceptar" CssClass="btn btn-primary mt-3 ms-2" OnClick="btnAceptarConfirmacion_Click" Visible="false" />
-
+        <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Visible="false" />
     </asp:Panel>
+        <asp:Button ID="btnVolverGrilla" runat="server" CssClass="btn btn-secondary mt-3" Text="Volver" OnClick="btnVolverGrilla_Click" />
 </asp:Content>

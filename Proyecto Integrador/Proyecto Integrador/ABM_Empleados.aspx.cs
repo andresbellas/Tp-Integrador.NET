@@ -113,6 +113,8 @@ namespace Proyecto_Integrador
         }
         protected void gvEmpleados_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+
+            btnVolverGrilla.Visible = false;
             if (e.CommandName == "Seleccionar")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
@@ -249,7 +251,7 @@ namespace Proyecto_Integrador
             }
             else
             {
-                Response.Redirect("ABM_Empleados.aspx");
+                Response.Redirect("Gerente.aspx");
             }
         }
 

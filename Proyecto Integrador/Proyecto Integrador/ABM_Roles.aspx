@@ -44,6 +44,6 @@
             </Columns>
         </asp:GridView>
 
-
+    <asp:Button ID="btnVolverGrilla" runat="server" CssClass="btn btn-secondary mt-3" Text="Volver" OnClick="btnVolverGrilla_Click" />
 
 </asp:Content>
