@@ -73,6 +73,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Gerente.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Historial.aspx" />
     <Content Include="Icons\UserDefault.svg" />
     <Content Include="Icons\UserGerente.svg" />
     <Content Include="Icons\UserMesero.svg" />
@@ -119,6 +120,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Historial.aspx.cs">
+      <DependentUpon>Historial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Historial.aspx.designer.cs">
+      <DependentUpon>Historial.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mesero.aspx.cs">
       <DependentUpon>Mesero.aspx</DependentUpon>

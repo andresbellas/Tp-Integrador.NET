@@ -11,8 +11,9 @@ namespace Entidades
         public int Id_mesa { get; set; }
         public int Nro_Mesa { get; set; }
 
-        public int Nro_Legajo { get; set; }
+        public int? Nro_Legajo { get; set; }
 
         public int Id_Estado {  get; set; }
     }
 }
+    

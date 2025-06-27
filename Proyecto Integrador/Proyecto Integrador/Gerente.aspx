@@ -1,7 +1,40 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" Inherits="Proyecto_Integrador.Gerente" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <!-- NAVBAR  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-0 shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-size:1.5rem;">Menú Administración</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <asp:LinkButton 
+                  runat="server" 
+                  ID="btnGestionGeneral" 
+                  CssClass="nav-link active"
+                  CausesValidation="false"
+                  style="font-size:1.2rem; cursor:pointer;">Gestión General</asp:LinkButton>
+            </li>
+            <li class="nav-item">
+              <asp:LinkButton 
+                  runat="server" 
+                  ID="btnHistorial" 
+                  CssClass="nav-link"
+                  CausesValidation="false"
+                  style="font-size:1.2rem; cursor:pointer;">Historial</asp:LinkButton>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <div class="container mt-4">
-        <h2 class="mb-4">Gestión General Administracion </h2>
+
+        <h2 class="mb-4">Gestión General Administracion</h2>
          
         <!-- Fancy borde y sombra para la tabla -->
         <div class="p-3 border border-dark rounded shadow-sm bg-white">
@@ -22,22 +55,22 @@
                         <asp:BoundField DataField="Id_mesa" HeaderText="Id Mesa" />
                         <asp:BoundField DataField="Nro_Mesa" HeaderText="Número Mesa" />
                         <asp:TemplateField HeaderText="Número Legajo">
-         <ItemTemplate>
-             <asp:Button 
-            ID="btnLegajo" 
-            runat="server" 
-            Text='<%# Eval("Nro_Legajo").ToString() %>' 
-            CssClass="btn btn-primary btn-sm"
-            CommandName="legajoClick"
-            CommandArgument='<%# Eval("Nro_Legajo") %>'
-            CausesValidation="false" />
-           </ItemTemplate>
-      </asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Button 
+                                    ID="btnLegajo" 
+                                    runat="server" 
+                                    Text='<%# (Eval("Nro_Legajo") == DBNull.Value || Convert.ToInt32(Eval("Nro_Legajo")) == 0) ? "No asignado" : Eval("Nro_Legajo").ToString() %>'
+                                    CssClass="btn btn-primary btn-sm"
+                                    CommandName="legajoClick"
+                                    CommandArgument='<%# Eval("Nro_Legajo") %>'
+                                    CausesValidation="false" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Estado">
-               <ItemTemplate>
-            <%# Eval("Id_Estado").ToString() == "1" ? "Libre" : "Ocupado" %>
-              </ItemTemplate>
-           </asp:TemplateField>
+                            <ItemTemplate>
+                                <%# Eval("Id_Estado").ToString() == "1" ? "Libre" : "Ocupado" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Acción">
                             <ItemTemplate>
                                 <asp:Button 
@@ -56,8 +89,6 @@
         </div>
 
         <div class="bg-primary text-white p-3 rounded mt-3 d-flex flex-wrap gap-3 justify-content-start shadow-sm">
-           
-
             <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     Empleados
