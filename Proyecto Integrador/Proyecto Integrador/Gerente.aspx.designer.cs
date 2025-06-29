@@ -67,5 +67,14 @@ namespace Proyecto_Integrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCerrarPedido;
+
+
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMesas;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divHistorial;
+        protected global::System.Web.UI.WebControls.GridView gvCobranzas;
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMedioPago;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBotones;
+        protected global::System.Web.UI.WebControls.LinkButton btnGestionGeneral;
+        protected global::System.Web.UI.WebControls.LinkButton btnHistorial;
     }
 }

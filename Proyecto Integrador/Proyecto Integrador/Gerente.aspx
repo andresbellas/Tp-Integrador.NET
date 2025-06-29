@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" Inherits="Proyecto_Integrador.Gerente" %>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <!-- NAVBAR  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-0 shadow-sm">
@@ -17,6 +18,7 @@
                   ID="btnGestionGeneral" 
                   CssClass="nav-link active"
                   CausesValidation="false"
+                  OnClick="btnGestionGeneral_Click"
                   style="font-size:1.2rem; cursor:pointer;">Gestión General</asp:LinkButton>
             </li>
             <li class="nav-item">
@@ -25,6 +27,7 @@
                   ID="btnHistorial" 
                   CssClass="nav-link"
                   CausesValidation="false"
+                  OnClick="btnHistorial_Click"
                   style="font-size:1.2rem; cursor:pointer;">Historial</asp:LinkButton>
             </li>
           </ul>
@@ -34,11 +37,9 @@
 
     <div class="container mt-4">
 
-        <h2 class="mb-4">Gestión General Administracion</h2>
+        <h2 class="mb-4">Gestión General Administración</h2>
          
-        <!-- Fancy borde y sombra para la tabla -->
-        <div class="p-3 border border-dark rounded shadow-sm bg-white">
-            <!-- contenedor con scroll vertical -->
+        <div class="p-3 border border-dark rounded shadow-sm bg-white" id="divMesas" runat="server" visible="true">
             <div style="max-height: 500px; overflow-y: auto;">
                 <asp:GridView 
                     ID="gvMesas" 
@@ -88,50 +89,84 @@
             </div>
         </div>
 
-        <div class="bg-primary text-white p-3 rounded mt-3 d-flex flex-wrap gap-3 justify-content-start shadow-sm">
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Empleados
-                </button>
-                <ul class="dropdown-menu">
-                    <asp:LinkButton runat="server" ID="btnAltaEmpleado" CssClass="dropdown-item" CommandArgument="altaEmpl" OnClick="Accion_Click">Alta Empleado</asp:LinkButton>
-                    <asp:LinkButton runat="server" ID="btnModEmpleado" CssClass="dropdown-item" CommandArgument="modificacionEmpl" OnClick="Accion_Click">Modificar Empleado</asp:LinkButton>
-                    <asp:LinkButton runat="server" ID="btnBajaEmpleado" CssClass="dropdown-item" CommandArgument="bajaEmpl" OnClick="Accion_Click">Baja Empleado</asp:LinkButton>
-                </ul>
+      
+        <div id="divHistorial" runat="server" visible="false">
+            <h2 class="mb-4">Historial de Cobranzas</h2>
+            <div class="p-3 border border-dark rounded shadow-sm bg-white">
+                <div style="max-height: 500px; overflow-y: auto;">
+                    <asp:GridView 
+                        ID="gvCobranzas" 
+                        runat="server" 
+                        AutoGenerateColumns="false" 
+                        CssClass="table table-striped table-bordered"
+                        AllowPaging="false">
+                        <Columns>
+                            <asp:BoundField DataField="id_cobranza" HeaderText="ID Cobranza" />
+                            <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
+                            <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
+                            <asp:BoundField DataField="MedioDePago.Nombre_Pago" HeaderText="Medio de Pago" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
 
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Insumos
-                </button>
-                <ul class="dropdown-menu">
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaIns" OnClick="Accion_Click">Alta Insumo</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionIns" OnClick="Accion_Click">Modificar Insumo</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="listarInsumos" OnClick="Accion_Click">Ver Insumos</asp:LinkButton>
-                </ul>
-            </div>
-
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Roles
-                </button>
-                <ul class="dropdown-menu">
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaRol" OnClick="Accion_Click">Alta Rol</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionRol" OnClick="Accion_Click">Modificar Rol</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="eliminarRol" OnClick="Accion_Click">Baja Rol</asp:LinkButton>
-                </ul>
-            </div>
-
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Medios de Pago
-                </button>
-                <ul class="dropdown-menu">
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaMedPago" OnClick="Accion_Click">Alta Medio de Pago</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionMedPago" OnClick="Accion_Click">Modificar Medio de Pago</asp:LinkButton>
-                    <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="eliminarMedPago" OnClick="Accion_Click">Baja Medio de Pago</asp:LinkButton>
-                </ul>
+            
+            <div class="mt-3">
+                <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por Medio de Pago:"></asp:Label>
+                <asp:TextBox ID="txtFiltroMedioPago" runat="server" CssClass="form-control" style="max-width:300px; display:inline-block; margin-left:10px;" />
             </div>
         </div>
+
+     >
+      
+<div id="divBotones" runat="server" class="bg-primary text-white p-3 rounded mt-3 d-flex flex-wrap gap-3 justify-content-start shadow-sm">
+
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Empleados
+        </button>
+        <ul class="dropdown-menu">
+            <asp:LinkButton runat="server" ID="btnAltaEmpleado" CssClass="dropdown-item" CommandArgument="altaEmpl" OnClick="Accion_Click">Alta Empleado</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnModEmpleado" CssClass="dropdown-item" CommandArgument="modificacionEmpl" OnClick="Accion_Click">Modificar Empleado</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="btnBajaEmpleado" CssClass="dropdown-item" CommandArgument="bajaEmpl" OnClick="Accion_Click">Baja Empleado</asp:LinkButton>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Insumos
+        </button>
+        <ul class="dropdown-menu">
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaIns" OnClick="Accion_Click">Alta Insumo</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionIns" OnClick="Accion_Click">Modificar Insumo</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="listarInsumos" OnClick="Accion_Click">Ver Insumos</asp:LinkButton>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Roles
+        </button>
+        <ul class="dropdown-menu">
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaRol" OnClick="Accion_Click">Alta Rol</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionRol" OnClick="Accion_Click">Modificar Rol</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="eliminarRol" OnClick="Accion_Click">Baja Rol</asp:LinkButton>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Medios de Pago
+        </button>
+        <ul class="dropdown-menu">
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="altaMedPago" OnClick="Accion_Click">Alta Medio de Pago</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="modificacionMedPago" OnClick="Accion_Click">Modificar Medio de Pago</asp:LinkButton>
+            <asp:LinkButton runat="server" CssClass="dropdown-item" CommandArgument="eliminarMedPago" OnClick="Accion_Click">Baja Medio de Pago</asp:LinkButton>
+        </ul>
+    </div>
+
+</div>
+
     </div>
 </asp:Content>
+    

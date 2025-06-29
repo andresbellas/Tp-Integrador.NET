@@ -21,18 +21,18 @@ namespace Proyecto_Integrador
                 L_Mesa l_Mesa = new L_Mesa();
                 mesas = l_Mesa.ListarMesas();
                 Empleados emp = Session["empleado"] as Empleados;
-                if (  emp == null || emp.RolEmpleado.id_rol != 1)
+                if (emp == null || emp.RolEmpleado.id_rol != 1)
                 {
                     Response.Redirect("Default.aspx");
                 }
 
-              
+
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
             }
 
         }
-       
+
         protected void Accion_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
@@ -40,7 +40,7 @@ namespace Proyecto_Integrador
 
             switch (accion)
             {
-       
+
                 case "asignarMesero":
                     // Lógica para asignar mesero
                     break;
@@ -59,7 +59,7 @@ namespace Proyecto_Integrador
                 case "gestionMesero":
                     // Lógica para gestionar meseros
                     break;
-              //Empleados
+                //Empleados
                 case "altaEmpl":
                     Response.Redirect("ABM_Empleados.aspx?modo=altaEmpl");
                     break;
@@ -110,6 +110,51 @@ namespace Proyecto_Integrador
                     break;
             }
         }
+
+
+        protected void btnGestionGeneral_Click(object sender, EventArgs e)
+        {
+            MostrarMesas();
+
+            divMesas.Visible = true;
+            divHistorial.Visible = false;
+            divBotones.Visible = true;
+
+            btnGestionGeneral.CssClass = "nav-link active";
+            btnHistorial.CssClass = "nav-link";
+        }
+
+        protected void btnHistorial_Click(object sender, EventArgs e)
+        {
+            divMesas.Visible = false;
+            divHistorial.Visible = true;
+            divBotones.Visible = false;
+
+                btnHistorial.CssClass = "nav-link active";
+            btnGestionGeneral.CssClass = "nav-link";
+
+            L_Cobranza l_cobranza = new L_Cobranza();
+            List<Cobranza> listaCobranzas = l_cobranza.ListarCobranzas();
+
+            gvCobranzas.DataSource = listaCobranzas;
+            gvCobranzas.DataBind();
+
+            txtFiltroMedioPago.Text = "";
+        }
+
+        private void MostrarMesas()
+        {
+            L_Mesa l_Mesa = new L_Mesa();
+            var mesas = l_Mesa.ListarMesas();
+
+            gvMesas.DataSource = mesas;
+            gvMesas.DataBind();
+        }
+
+
+
+
+
 
     }
 }
