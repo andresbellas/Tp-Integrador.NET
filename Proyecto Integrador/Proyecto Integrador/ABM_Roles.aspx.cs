@@ -142,10 +142,17 @@ namespace Proyecto_Integrador
 
                     logicaRol.ModificarRol(modificado);
                     MostrarMensajeYRedirect("Rol modificado correctamente.", "Gerente.aspx");
-                    
+
                 }
 
-                LimpiarFormulario();
+                else if(ModoABM == "eliminarRol")
+                {
+                    int id_rol = int.Parse(txtIdRol.Text);
+                    logicaRol.EliminarRol(id_rol);
+                    MostrarMensajeYRedirect("Se ha borrado el rol.", "Gerente.aspx");
+                }
+
+                    LimpiarFormulario();
                 PanelFormulario.Visible = false;
             }
             catch (Exception ex)
