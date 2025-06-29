@@ -20,6 +20,16 @@ namespace Proyecto_Integrador
             if (!IsPostBack)
             {
                 string modo = Request.QueryString["modo"];
+                
+                Empleados emp = Session["empleado"] as Empleados;
+
+                if (emp == null || emp.RolEmpleado.id_rol != 1)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+
+
+
                 if (!string.IsNullOrEmpty(modo))
                 {
                     ModoABM = modo;

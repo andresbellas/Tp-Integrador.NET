@@ -15,6 +15,9 @@ namespace Proyecto_Integrador
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
             if (!IsPostBack)
             {
                 List<Mesa> mesas = new List<Mesa>();
@@ -30,6 +33,7 @@ namespace Proyecto_Integrador
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
             }
+           
 
         }
 
@@ -119,6 +123,7 @@ namespace Proyecto_Integrador
             divMesas.Visible = true;
             divHistorial.Visible = false;
             divBotones.Visible = true;
+            tituloGestion.Visible = true;
 
             btnGestionGeneral.CssClass = "nav-link active";
             btnHistorial.CssClass = "nav-link";
@@ -129,8 +134,9 @@ namespace Proyecto_Integrador
             divMesas.Visible = false;
             divHistorial.Visible = true;
             divBotones.Visible = false;
+            tituloGestion.Visible = false;
 
-                btnHistorial.CssClass = "nav-link active";
+            btnHistorial.CssClass = "nav-link active";
             btnGestionGeneral.CssClass = "nav-link";
 
             L_Cobranza l_cobranza = new L_Cobranza();

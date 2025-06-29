@@ -76,5 +76,6 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBotones;
         protected global::System.Web.UI.WebControls.LinkButton btnGestionGeneral;
         protected global::System.Web.UI.WebControls.LinkButton btnHistorial;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloGestion;
     }
 }

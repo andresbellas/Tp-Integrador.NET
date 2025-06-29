@@ -17,7 +17,7 @@ namespace Proyecto_Integrador
             {
                 Empleados emp = Session["empleado"] as Empleados;
 
-                if(emp == null)
+                if(emp == null || emp.RolEmpleado.id_rol != 2)
                 {
                     Response.Redirect("Default.aspx");
                 }
@@ -85,3 +85,5 @@ namespace Proyecto_Integrador
 
     }
 }
+
+

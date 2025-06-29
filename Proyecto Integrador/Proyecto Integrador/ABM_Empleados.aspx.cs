@@ -20,7 +20,15 @@ namespace Proyecto_Integrador
             if (!IsPostBack)
             {
                 PanelFormulario.Visible = false;
-                //PanelBuscarEmpleado.Visible = false;
+
+                Empleados emp = Session["empleado"] as Empleados;
+
+                if (emp == null || emp.RolEmpleado.id_rol != 1)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+
+
 
                 string modo = Request.QueryString["modo"];
                 if (!string.IsNullOrEmpty(modo))

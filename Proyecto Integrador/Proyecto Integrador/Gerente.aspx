@@ -37,7 +37,7 @@
 
     <div class="container mt-4">
 
-        <h2 class="mb-4">Gestión General Administración</h2>
+        <h2 id="tituloGestion" class="mb-4" runat="server">Gestión General Administración</h2>
          
         <div class="p-3 border border-dark rounded shadow-sm bg-white" id="divMesas" runat="server" visible="true">
             <div style="max-height: 500px; overflow-y: auto;">
@@ -117,7 +117,7 @@
             </div>
         </div>
 
-     >
+     
       
 <div id="divBotones" runat="server" class="bg-primary text-white p-3 rounded mt-3 d-flex flex-wrap gap-3 justify-content-start shadow-sm">
 

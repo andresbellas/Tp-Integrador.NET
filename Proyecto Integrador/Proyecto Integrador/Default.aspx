@@ -1,6 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Proyecto_Integrador.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+     <script type="text/javascript">
+        window.addEventListener('pageshow', function (event) {
+            
+            if (event.persisted) {
+                __doPostBack('<%= Page.UniqueID %>', 'FromCache');
+            }
+        });
+     </script>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

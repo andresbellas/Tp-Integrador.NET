@@ -14,16 +14,22 @@ namespace Proyecto_Integrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+
+
             if (!IsPostBack)
             {
                 Session.Abandon();
-                txtUsername.Text = string.Empty;
-                txtPassword.Text = string.Empty;
-
+                txtUsername.Text = "";
+                txtPassword.Text = "";
+                lblError.Text = "";
             }
-          
-
         }
+           
+        
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
@@ -74,10 +80,12 @@ namespace Proyecto_Integrador
 
                     if (empleado.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
                     {
+
                         Response.Redirect("Gerente.aspx");
                     }
                     else if(empleado.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
                     {
+                        
                         Response.Redirect("Mesero.aspx");
                     }
                     else
