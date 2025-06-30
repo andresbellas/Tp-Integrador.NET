@@ -33,7 +33,7 @@ namespace Proyecto_Integrador
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
             }
-           
+
 
         }
 
@@ -124,9 +124,11 @@ namespace Proyecto_Integrador
             divHistorial.Visible = false;
             divBotones.Visible = true;
             tituloGestion.Visible = true;
+            divHistorialPedidos.Visible = false;
 
             btnGestionGeneral.CssClass = "nav-link active";
             btnHistorial.CssClass = "nav-link";
+            btnHistorialPedidos.CssClass = "nav-link";
         }
 
         protected void btnHistorial_Click(object sender, EventArgs e)
@@ -135,9 +137,11 @@ namespace Proyecto_Integrador
             divHistorial.Visible = true;
             divBotones.Visible = false;
             tituloGestion.Visible = false;
+            divHistorialPedidos.Visible = false;
 
             btnHistorial.CssClass = "nav-link active";
             btnGestionGeneral.CssClass = "nav-link";
+            btnHistorialPedidos.CssClass = "nav-link";
 
             L_Cobranza l_cobranza = new L_Cobranza();
             List<Cobranza> listaCobranzas = l_cobranza.ListarCobranzas();
@@ -158,10 +162,29 @@ namespace Proyecto_Integrador
         }
 
 
+        protected void btnHistorialPedidos_Click(object sender, EventArgs e)
+        {
+            divMesas.Visible = false;
+            divHistorial.Visible = false;
+            divBotones.Visible = false;
+            tituloGestion.Visible = false;
+
+            divHistorialPedidos.Visible = true;
+
+            btnHistorialPedidos.CssClass = "nav-link active";
+            btnGestionGeneral.CssClass = "nav-link";
+            btnHistorial.CssClass = "nav-link";
+
+            // ejemplo con pedidos
+            L_Pedidos l_pedido = new L_Pedidos();
+            List<Pedidos> listaPedidos = l_pedido.Listar();
+
+            gvPedidos.DataSource = listaPedidos;
+            gvPedidos.DataBind();
 
 
 
-
+        }
     }
-}
 
+}

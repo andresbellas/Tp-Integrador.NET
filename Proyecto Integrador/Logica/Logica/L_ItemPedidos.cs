@@ -27,8 +27,8 @@ namespace Logica
                     ItemPedidos aux = new ItemPedidos();
                     aux.Id_item = (int)conexion.Lector["Id_item"];
                     aux.Id_Pedido = (int)conexion.Lector["Id_Pedido"];
-                    aux.Sku = (int)conexion.Lector["Sku"];
-                    aux.Cantidad = (int)conexion.Lector["Cantidad"];
+                    aux.Sku = conexion.Lector["Sku"] != DBNull.Value ? conexion.Lector["Sku"].ToString() : string.Empty;
+                    aux.Cantidad = conexion.Lector["Cantidad"] != DBNull.Value ? Convert.ToInt32(conexion.Lector["Cantidad"]) : 0;
                     aux.Total = (float)Convert.ToDouble(conexion.Lector["Total"]);
                     lista.Add(aux);
                 }

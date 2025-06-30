@@ -13,7 +13,7 @@ namespace Entidades
         public int Id_item {  get; set; }
         public int Id_Pedido { get; set; }
 
-        public int Sku { get; set; }
+        public string Sku { get; set; }
 
         public int Cantidad { get; set; }
 

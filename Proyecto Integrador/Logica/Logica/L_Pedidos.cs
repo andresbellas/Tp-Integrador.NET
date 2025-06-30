@@ -18,20 +18,20 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT p.Id_pedido, p.Nro_Pedido, p.Fecha_Pedido, p.Id_Estado, m.Id_mesa, m.Nro_Mesa FROM Pedidos p JOIN Mesas m ON p.Id_Mesa = m.Id_mesa");
+                conexion.Consulta("SELECT p.Id_pedido, p.Nro_Pedido, p.Fecha_Pedido, p.Id_Estado, m.Id_mesa, m.Nro_Mesa FROM Pedidos p JOIN Mesa m ON p.Id_Mesa = m.Id_mesa");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())
                 {
                     Pedidos aux = new Pedidos();
                     aux.Id_pedido = (int)conexion.Lector["Id_pedido"];
-                    aux.Nro_Pedido = (int)conexion.Lector["Nro_Pedido"];
-                    aux.Fecha_Pedido = (DateTime)conexion.Lector["Fecha_Pedido"];
+                    aux.Nro_Pedido = Convert.ToInt32(conexion.Lector["Nro_Pedido"]);
+                    aux.Fecha_Pedido = Convert.ToDateTime(conexion.Lector["Fecha_Pedido"]);
                     aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
 
                     aux.MesaAsignada = new Mesa();
                     aux.MesaAsignada.Id_mesa = (int)conexion.Lector["Id_mesa"];
-                    aux.MesaAsignada.Nro_Mesa = (int)conexion.Lector["Nro_Mesa"];
+                    aux.MesaAsignada.Nro_Mesa = Convert.ToInt32(conexion.Lector["Nro_Mesa"]);
 
                     aux.ItemsPedidos = new List<ItemPedidos>();
                     L_ItemPedidos logicaItem = new L_ItemPedidos();
