@@ -42,7 +42,7 @@ namespace Logica
                     {
                         id_rol = (int)conexion.Lector["Id_Rol"],
                         Nombre_rol = (string)conexion.Lector["Nombre_Rol"],
-                        Descripcion = (string)conexion.Lector["Descripcion"] 
+                        Descripcion = (string)conexion.Lector["Descripcion"]
                     };
 
                     lista.Add(aux);
@@ -168,7 +168,7 @@ namespace Logica
                        JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario
                        JOIN Rol r ON e.Id_Rol = r.Id_Rol
                        WHERE e.Id_Usuario = @Id_Usuario");
-                
+
                 sql.SetParametros("@Id_Usuario", id_usuario);
                 sql.Ejecutar();
 
@@ -207,6 +207,114 @@ namespace Logica
                 sql.cerrarConexion();
             }
         }
+
+
+
+        public Empleados EmpleadoPorLegajo(int nroLegajo)
+        {
+            Empleados aux = null;
+            Sql sql = new Sql();
+
+            try
+            {
+                sql.Consulta(@"SELECT e.Id_Empleado, e.Nro_Legajo, e.Nombre, e.Apellido, e.Baja,
+                               e.Id_Usuario, e.Id_Rol, u.Usuario AS NombreUsuario, u.Contraseña,
+                               r.Nombre_Rol, r.Descripcion
+                        FROM Empleados e
+                        JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario
+                        JOIN Rol r ON e.Id_Rol = r.Id_Rol
+                        WHERE e.Nro_Legajo = @Nro_Legajo");
+
+                sql.SetParametros("@Nro_Legajo", nroLegajo);
+                sql.Ejecutar();
+
+                if (sql.Lector.Read())
+                {
+                    aux = new Empleados();
+                    aux.id_empleado = (int)sql.Lector["Id_Empleado"];
+                    aux.Nro_Legajo = Convert.ToInt32(sql.Lector["Nro_Legajo"]);
+                    aux.Nombre = (string)sql.Lector["Nombre"];
+                    aux.Apellido = (string)sql.Lector["Apellido"];
+                    aux.baja = (bool)sql.Lector["Baja"];
+
+                    aux.UsuarioEmpleado = new Usuarios
+                    {
+                        Id_Usuario = (int)sql.Lector["Id_Usuario"],
+                        Usuario = (string)sql.Lector["NombreUsuario"],
+                        Contraseña = (string)sql.Lector["Contraseña"]
+                    };
+
+                    aux.RolEmpleado = new Rol
+                    {
+                        id_rol = (int)sql.Lector["Id_Rol"],
+                        Nombre_rol = (string)sql.Lector["Nombre_Rol"],
+                        Descripcion = (string)sql.Lector["Descripcion"]
+                    };
+                }
+
+                return aux;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sql.cerrarConexion();
+            }
+        }
+
+
+
+
+        public bool ExiseEmpleado(int nroLegajo)
+        {
+            Sql sql = new Sql();
+            bool found = false; // Initialize to false
+
+            try
+            {
+                // We only need to check for existence, so selecting a single column is enough
+                sql.Consulta(@"SELECT 1 FROM Empleados WHERE Nro_Legajo = @Nro_Legajo");
+                sql.SetParametros("@Nro_Legajo", nroLegajo);
+                sql.Ejecutar(); // Execute the query
+
+                // If Lector.Read() returns true, it means a row was found
+                if (sql.Lector.Read())
+                {
+                    found = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Re-throw the exception or log it if necessary
+                throw new Exception("Error al verificar empleado por legajo: " + ex.Message, ex);
+            }
+            finally
+            {
+                sql.cerrarConexion(); // Always ensure the connection is closed
+            }
+
+            return found; // Return true if found, false otherwise
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

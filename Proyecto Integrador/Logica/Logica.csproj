@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logica\LogicaAdicional.cs" />
     <Compile Include="Logica\L_ItemPedidos.cs" />
     <Compile Include="Logica\L_Cobranza.cs" />
     <Compile Include="Logica\L_Empleados.cs" />

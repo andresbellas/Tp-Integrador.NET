@@ -185,6 +185,32 @@ namespace Proyecto_Integrador
 
 
         }
+
+        protected void Informacion_Click(object sender, EventArgs e)
+        {
+            L_Empleados logica = new L_Empleados();
+            Button btn = (Button)sender;
+
+           
+            int legajo = Convert.ToInt32(btn.CommandArgument);
+
+            
+            GridViewRow row = (GridViewRow)btn.NamingContainer;
+            int idMesa = Convert.ToInt32(gvMesas.DataKeys[row.RowIndex].Value);
+
+            Empleados empleado = logica.EmpleadoPorLegajo(legajo);
+            Session["MeseroSolicitado"] = empleado;
+
+            L_Mesa logicaMesa = new L_Mesa();
+            Mesa mesa = logicaMesa.BuscarPorIdMesa(idMesa);
+            Session["MesaSeleccionada"] = mesa;
+
+            Response.Redirect("InformacionMesero.aspx", false);
+
+        }
+
+
+
     }
 
 }

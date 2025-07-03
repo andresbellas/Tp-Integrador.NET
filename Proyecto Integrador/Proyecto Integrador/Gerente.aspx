@@ -70,7 +70,8 @@
                   CssClass="btn btn-primary btn-sm"
                   CommandName="legajoClick"
                   CommandArgument='<%# Eval("Nro_Legajo") %>'
-                  CausesValidation="false" />
+                  CausesValidation="false"
+                  OnClick="Informacion_Click"/>
               </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Estado">
@@ -87,7 +88,8 @@
                   CssClass='<%# Eval("Id_Estado").ToString() == "1" ? "btn btn-success btn-sm" : "btn btn-danger btn-sm" %>'
                   CommandName="accionMesa"
                   CommandArgument='<%# Eval("Id_Estado") %>'
-                  CausesValidation="false" />
+                  CausesValidation="false"
+                  />
               </ItemTemplate>
             </asp:TemplateField>
           </Columns>

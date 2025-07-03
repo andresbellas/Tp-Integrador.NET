@@ -76,6 +76,7 @@
     <Content Include="Icons\UserDefault.svg" />
     <Content Include="Icons\UserGerente.svg" />
     <Content Include="Icons\UserMesero.svg" />
+    <Content Include="InformacionMesero.aspx" />
     <Content Include="Mesero.aspx" />
     <Content Include="Pedido.aspx" />
     <Content Include="Web.config" />
@@ -119,6 +120,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="InformacionMesero.aspx.cs">
+      <DependentUpon>InformacionMesero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformacionMesero.aspx.designer.cs">
+      <DependentUpon>InformacionMesero.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mesero.aspx.cs">
       <DependentUpon>Mesero.aspx</DependentUpon>
