@@ -131,17 +131,25 @@
             <h2 class="mb-4">Historial de Pedidos</h2>
             <div class="p-3 border border-dark rounded shadow-sm bg-white">
                 <div style="max-height: 500px; overflow-y: auto;">
-                    <asp:GridView
-                        ID="gvPedidos"
-                        runat="server"
-                        AutoGenerateColumns="false"
-                        CssClass="table table-striped table-bordered">
-                        <columns>
-                            <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
-                            <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" />
-                           <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Numero" />
-                        </columns>
-                    </asp:GridView>
+               <asp:GridView 
+    ID="gvPedidos" 
+    runat="server" 
+    AutoGenerateColumns="False" 
+    CssClass="table table-striped table-bordered"
+    DataKeyNames="Id_Pedido"
+    AllowPaging="false"
+    >
+    <Columns>
+        <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
+        <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy}" />
+        <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Número" />
+        <asp:TemplateField HeaderText="Estado">
+            <ItemTemplate>
+                <%# Convert.ToInt32(Eval("Id_Estado")) == 3 ? "Activo" : (Convert.ToInt32(Eval("Id_Estado")) == 4 ? "Cerrado" : "Desconocido") %>
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
                 </div>
             </div>
         </div>
