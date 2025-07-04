@@ -14,6 +14,7 @@ namespace Proyecto_Integrador
 
 
         L_MedioDePago lMediosPago = new L_MedioDePago();
+        Pedidos Vigente = new Pedidos();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,6 +23,10 @@ namespace Proyecto_Integrador
                 if (Session["IdPedido"] != null)
                 {
                     int idPedido = (int)Session["IdPedido"];
+                    L_Pedidos pago = new L_Pedidos();
+                    Vigente = pago.BuscarPorId(idPedido);
+                    lblNroPedido.Text = Vigente.Nro_Pedido.ToString();
+
                     lblNroPedido.Text = idPedido.ToString();
 
                    
@@ -65,43 +70,6 @@ namespace Proyecto_Integrador
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         protected void btnVolver_Click(object sender, EventArgs e)
         {
 
@@ -115,18 +83,6 @@ namespace Proyecto_Integrador
             lblMensaje.Text = "Botón Aceptar presionado.";
             lblMensaje.Visible = true;
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

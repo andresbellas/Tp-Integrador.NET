@@ -197,5 +197,68 @@ namespace Logica
 
 
         }
+
+
+
+        public Pedidos BuscarPorId(int idPedido)
+        {
+            Sql conexion = new Sql();
+            try
+            {
+                conexion.Consulta(@"SELECT p.Id_pedido, p.Nro_Pedido, p.Fecha_Pedido, p.Id_Estado, 
+                                   m.Id_mesa, m.Nro_Mesa, p.Nro_Legajo 
+                            FROM Pedidos p 
+                            JOIN Mesa m ON p.Id_Mesa = m.Id_mesa
+                            WHERE p.Id_pedido = @IdPedido");
+                conexion.SetParametros("@IdPedido", idPedido);
+                conexion.Ejecutar();
+
+                if (conexion.Lector.Read())
+                {
+                    Pedidos aux = new Pedidos();
+                    aux.Id_pedido = (int)conexion.Lector["Id_pedido"];
+                    aux.Nro_Pedido = Convert.ToInt32(conexion.Lector["Nro_Pedido"]);
+                    aux.Fecha_Pedido = Convert.ToDateTime(conexion.Lector["Fecha_Pedido"]);
+                    aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
+                    aux.Nro_Legajo = Convert.ToInt32(conexion.Lector["Nro_Legajo"]);
+
+                    aux.MesaAsignada = new Mesa
+                    {
+                        Id_mesa = (int)conexion.Lector["Id_mesa"],
+                        Nro_Mesa = Convert.ToInt32(conexion.Lector["Nro_Mesa"])
+                    };
+
+                    // cargar los items
+                    aux.ItemsPedidos = new List<ItemPedidos>();
+                    L_ItemPedidos logicaItem = new L_ItemPedidos();
+                    aux.ItemsPedidos = logicaItem.ListarPorPedido(aux.Id_pedido);
+
+                    return aux;
+                }
+                else
+                {
+                    return null; 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }
