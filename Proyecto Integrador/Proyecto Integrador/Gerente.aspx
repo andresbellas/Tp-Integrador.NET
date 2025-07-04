@@ -120,10 +120,20 @@
                     </asp:GridView>
                 </div>
             </div>
-            <div class="mt-3">
-                <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por Medio de Pago:" />
-                <asp:TextBox ID="txtFiltroMedioPago" runat="server" CssClass="form-control" style="max-width: 300px; display: inline-block; margin-left: 10px;" />
-            </div>
+    <div class="mt-3 d-flex flex-wrap gap-5 align-items-center">
+    <div class="d-flex align-items-center gap-2">
+        <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por Medio de Pago:" />
+        <asp:DropDownList ID="ddlFiltroMedioPago" runat="server" CssClass="form-select" style="max-width: 200px;">
+            <asp:ListItem Text="-- Seleccione --" Value="" />
+        </asp:DropDownList>
+        <asp:Button ID="btnFiltrarMedioPago" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnFiltrarMedioPago_Click" />
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <asp:Label ID="lblFiltroPedido" runat="server" Text="Filtrar por Número de Pedido:" />
+        <asp:TextBox ID="txtFiltroPedido" runat="server" CssClass="form-control" style="max-width: 200px;" />
+        <asp:Button ID="btnFiltrarPedido" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="btnFiltrarPedido_Click" />
+    </div>
+</div>
         </div>
 
         <!-- HISTORIAL DE PEDIDOS -->

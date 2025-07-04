@@ -20,18 +20,30 @@ namespace Proyecto_Integrador
 
             if (!IsPostBack)
             {
+                // lo que ya tenías...
                 List<Mesa> mesas = new List<Mesa>();
                 L_Mesa l_Mesa = new L_Mesa();
                 mesas = l_Mesa.ListarMesas();
+
                 Empleados emp = Session["empleado"] as Empleados;
                 if (emp == null || emp.RolEmpleado.id_rol != 1)
                 {
                     Response.Redirect("Default.aspx");
                 }
 
-
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
+
+                // cargar métodos de pago
+                L_MedioDePago logicaMedios = new L_MedioDePago();
+                List<MedioDePago> listaMedios = logicaMedios.ListarMedios();
+
+                ddlFiltroMedioPago.DataSource = listaMedios;
+                ddlFiltroMedioPago.DataTextField = "Nombre_Pago";
+                ddlFiltroMedioPago.DataValueField = "Id_Pago";
+                ddlFiltroMedioPago.DataBind();
+
+                ddlFiltroMedioPago.Items.Insert(0, new ListItem("-- Seleccione --", ""));
             }
 
 
@@ -45,24 +57,7 @@ namespace Proyecto_Integrador
             switch (accion)
             {
 
-                case "asignarMesero":
-                    // Lógica para asignar mesero
-                    break;
-                case "desasignarMesero":
-                    // Lógica para desasignar mesero
-                    break;
-                case "abrirPed":
-                    // Lógica para abrir pedido
-                    break;
-                case "cancelarPed":
-                    // Lógica para cancelar pedido
-                    break;
-                case "cerrarPed":
-                    // Lógica para cerrar pedido
-                    break;
-                case "gestionMesero":
-                    // Lógica para gestionar meseros
-                    break;
+                
                 //Empleados
                 case "altaEmpl":
                     Response.Redirect("ABM_Empleados.aspx?modo=altaEmpl");
@@ -149,7 +144,7 @@ namespace Proyecto_Integrador
             gvCobranzas.DataSource = listaCobranzas;
             gvCobranzas.DataBind();
 
-            txtFiltroMedioPago.Text = "";
+            ddlFiltroMedioPago.ClearSelection();
         }
 
         private void MostrarMesas()
@@ -175,7 +170,7 @@ namespace Proyecto_Integrador
             btnGestionGeneral.CssClass = "nav-link";
             btnHistorial.CssClass = "nav-link";
 
-            // ejemplo con pedidos
+           
             L_Pedidos l_pedido = new L_Pedidos();
             List<Pedidos> listaPedidos = l_pedido.Listar();
 
@@ -191,10 +186,10 @@ namespace Proyecto_Integrador
             L_Empleados logica = new L_Empleados();
             Button btn = (Button)sender;
 
-           
+
             int legajo = Convert.ToInt32(btn.CommandArgument);
 
-            
+
             GridViewRow row = (GridViewRow)btn.NamingContainer;
             int idMesa = Convert.ToInt32(gvMesas.DataKeys[row.RowIndex].Value);
 
@@ -213,28 +208,83 @@ namespace Proyecto_Integrador
         {
             if (e.CommandName == "accionMesa")
             {
-                // Obtenemos el Id_mesa desde CommandArgument
+                
                 int idMesa = Convert.ToInt32(e.CommandArgument);
 
                 L_Mesa logicaMesa = new L_Mesa();
                 Mesa mesa = logicaMesa.BuscarPorIdMesa(idMesa);
                 Session["MesaSeleccionada"] = mesa;
 
-                // Obtenemos el estado actual para decidir qué acción hacer
+
                 int estadoMesa = mesa.Id_Estado;
 
-                if (estadoMesa == 1) // 1 = Libre, Abrir Pedido
+                if (estadoMesa == 1)
                 {
-                    // Podés crear el pedido aquí o derivar para crearlo
+
                     Response.Redirect("Pedido.aspx?modo=abrir");
                 }
                 else
                 {
-                    // Mesa ocupada, gestionamos pedido
+
                     Response.Redirect("Pedido.aspx?modo=gestionar");
                 }
             }
         }
+
+        protected void btnFiltrarMedioPago_Click(object sender, EventArgs e)
+        {
+            string filtroMedio = ddlFiltroMedioPago.SelectedValue; 
+
+            L_Cobranza l_cobranza = new L_Cobranza();
+            List<Cobranza> listaCobranzas = l_cobranza.ListarCobranzas();
+
+            List<Cobranza> filtradas;
+
+            if (string.IsNullOrEmpty(filtroMedio))
+            {
+                filtradas = listaCobranzas;
+            }
+            else
+            {
+               
+                int idPago = int.Parse(filtroMedio);
+                filtradas = listaCobranzas
+                    .Where(c => c.MedioDePago != null && c.MedioDePago.Id_Pago == idPago)
+                    .ToList();
+            }
+
+            gvCobranzas.DataSource = filtradas;
+            gvCobranzas.DataBind();
+        }
+
+        protected void btnFiltrarPedido_Click(object sender, EventArgs e)
+        {
+            string textoPedido = txtFiltroPedido.Text.Trim();
+            int numeroPedido;
+
+            if (int.TryParse(textoPedido, out numeroPedido))
+            {
+                L_Cobranza l_cobranza = new L_Cobranza();
+                List<Cobranza> listaCobranzas = l_cobranza.ListarCobranzas();
+
+                var filtradas = listaCobranzas
+                    .Where(c => c.Id_Pedido == numeroPedido)
+                    .ToList();
+
+                gvCobranzas.DataSource = filtradas;
+                gvCobranzas.DataBind();
+            }
+            else
+            {
+                
+            }
+        }
+
+
+
+
+
+
 
 
     }

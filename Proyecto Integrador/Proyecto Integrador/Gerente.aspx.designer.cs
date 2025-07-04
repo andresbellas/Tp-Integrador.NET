@@ -80,5 +80,8 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.LinkButton btnHistorialPedidos;
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divHistorialPedidos;
         protected global::System.Web.UI.WebControls.GridView gvPedidos;
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroPedido;
+        protected global::System.Web.UI.WebControls.Button btnFiltrarPedido;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroMedioPago;
     }
 }
