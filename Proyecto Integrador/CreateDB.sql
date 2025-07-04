@@ -7,7 +7,7 @@ GO
 CREATE TABLE Rol (
     Id_Rol INT PRIMARY KEY IDENTITY(1,1),
     Nombre_Rol VARCHAR(100) NOT NULL,
-    Descripcion VARCHAR(255)
+    Descripcion VARCHAR(255),
     Baja BIT NOT NULL DEFAULT 0,
 );
 
@@ -54,13 +54,22 @@ CREATE TABLE Insumos (
 
 CREATE TABLE Pedidos (
     Id_Pedido INT PRIMARY KEY IDENTITY(1,1),
-    Nro_Pedido SMALLINT NOT NULL,
+    Nro_Pedido BIGINT NOT NULL,
     Fecha_Pedido DATE NOT NULL,
     Id_Estado INT NOT NULL,
     Id_Mesa INT NOT NULL,
+	Nro_Legajo SMALLINT NOT NULL,
     FOREIGN KEY (Id_Estado) REFERENCES Estado(Id_Estado),
-    FOREIGN KEY (Id_Mesa) REFERENCES Mesa(Id_Mesa)
+    FOREIGN KEY (Id_Mesa) REFERENCES Mesa(Id_Mesa),
+	FOREIGN KEY (Nro_Legajo) REFERENCES Empleados(Nro_Legajo)
 );
+
+
+CREATE SEQUENCE Seq_NroPedido
+    AS BIGINT
+    START WITH 10000001
+    INCREMENT BY 1;
+
 
 CREATE TABLE ItemPedidos (
     Id_Item INT PRIMARY KEY IDENTITY(1,1),
@@ -97,7 +106,7 @@ VALUES
 
 
 INSERT INTO Usuarios (Usuario, Contraseña) VALUES
-('bularaiga', '1234'),
+('bulariaga', '1234'),
 ('abellas', '1234'),
 ('nmares', '1234');
 
@@ -111,7 +120,9 @@ VALUES
 
 INSERT INTO Estado (Nombre_Estado, Descripcion) VALUES
 ('Libre', 'Mesa disponible para ser ocupada'),     
-('Ocupado', 'Mesa actualmente ocupada');   
+('Ocupado', 'Mesa actualmente ocupada'),
+('Activo', 'Pedido activo'),
+('Cerrado','Pedido cerrado');   
 
 
 INSERT INTO Mesa (Nro_Mesa, Nro_Legajo, Id_Estado) VALUES
