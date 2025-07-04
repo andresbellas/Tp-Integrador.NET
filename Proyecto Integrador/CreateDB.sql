@@ -55,7 +55,7 @@ CREATE TABLE Insumos (
 CREATE TABLE Pedidos (
     Id_Pedido INT PRIMARY KEY IDENTITY(1,1),
     Nro_Pedido BIGINT NOT NULL,
-    Fecha_Pedido DATE NOT NULL,
+    Fecha_Pedido DATETIME NOT NULL;
     Id_Estado INT NOT NULL,
     Id_Mesa INT NOT NULL,
 	Nro_Legajo SMALLINT NOT NULL,

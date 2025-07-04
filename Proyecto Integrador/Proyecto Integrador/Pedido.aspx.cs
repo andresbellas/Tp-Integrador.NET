@@ -322,25 +322,25 @@ namespace Proyecto_Integrador
 
                 try
                 {
-                    // 1) recuperar todos los ítems del pedido
+                    
                     List<ItemPedidos> items = l_ItemPedidos.ListarPorPedido(idPedido);
 
-                    // 2) devolver stock de cada ítem
+                   
                     foreach (ItemPedidos item in items)
                     {
                         l_Insumos.ActualizarStockInsumo(item.Sku, -item.Cantidad);
                     }
 
-                    // 3) eliminar todos los ítems
+                   
                     foreach (ItemPedidos item in items)
                     {
                         l_ItemPedidos.Eliminar(item.Id_item, idPedido);
                     }
 
-                    // 4) eliminar el pedido
+                   
                     l_Pedidos.Eliminar(idPedido);
 
-                    // 5) cambiar mesa a libre
+                    
                     if (Session["IdMesa"] != null)
                     {
                         int idMesa = (int)Session["IdMesa"];
