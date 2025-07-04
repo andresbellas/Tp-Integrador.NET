@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" Inherits="Proyecto_Integrador.Gerente" %>
 
+<script runat="server">
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+
+    }
+</script>
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <!-- NAVBAR -->
@@ -19,7 +28,7 @@
                             CssClass="nav-link active"
                             CausesValidation="false"
                             OnClick="btnGestionGeneral_Click"
-                            style="font-size: 1.2rem;">
+                            Style="font-size: 1.2rem;">
                             Gestión General</asp:LinkButton>
                     </li>
                     <li class="nav-item">
@@ -29,7 +38,7 @@
                             CssClass="nav-link"
                             CausesValidation="false"
                             OnClick="btnHistorial_Click"
-                            style="font-size: 1.2rem;">
+                            Style="font-size: 1.2rem;">
                             Historial de Pagos</asp:LinkButton>
                     </li>
                     <li class="nav-item">
@@ -39,7 +48,7 @@
                             CssClass="nav-link"
                             CausesValidation="false"
                             OnClick="btnHistorialPedidos_Click"
-                            style="font-size: 1.2rem;">
+                            Style="font-size: 1.2rem;">
                             Historial de Pedidos</asp:LinkButton>
                     </li>
                 </ul>
@@ -61,12 +70,12 @@
                     CssClass="table table-striped table-bordered"
                     DataKeyNames="Id_mesa"
                     AllowPaging="false"
-                     OnRowCommand="gvMesas_RowCommand">
-                    <columns>
+                    OnRowCommand="gvMesas_RowCommand">
+                    <Columns>
                         <asp:BoundField DataField="Id_mesa" HeaderText="Id Mesa" />
                         <asp:BoundField DataField="Nro_Mesa" HeaderText="Número Mesa" />
                         <asp:TemplateField HeaderText="Número Legajo">
-                            <itemtemplate>
+                            <ItemTemplate>
                                 <asp:Button
                                     ID="btnLegajo"
                                     runat="server"
@@ -76,15 +85,15 @@
                                     CommandArgument='<%# Eval("Nro_Legajo") %>'
                                     CausesValidation="false"
                                     OnClick="Informacion_Click" />
-                            </itemtemplate>
+                            </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Estado">
-                            <itemtemplate>
+                            <ItemTemplate>
                                 <%# Eval("NombreEstado") %>
-                            </itemtemplate>
+                            </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Acción">
-                            <itemtemplate>
+                            <ItemTemplate>
                                 <asp:Button
                                     ID="btnSeleccionar"
                                     runat="server"
@@ -93,9 +102,9 @@
                                     CommandName="accionMesa"
                                     CommandArgument='<%# Eval("Id_mesa") %>'
                                     CausesValidation="false" />
-                            </itemtemplate>
+                            </ItemTemplate>
                         </asp:TemplateField>
-                    </columns>
+                    </Columns>
                 </asp:GridView>
             </div>
         </div>
@@ -111,29 +120,28 @@
                         runat="server"
                         AutoGenerateColumns="false"
                         CssClass="table table-striped table-bordered">
-                        <columns>
-                            <asp:BoundField DataField="id_cobranza" HeaderText="ID Cobranza" />
-                            <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
+                        <Columns>
+                            <asp:BoundField DataField="Nro_Pedido" HeaderText="Nro Pedido" />
                             <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
                             <asp:BoundField DataField="MedioDePago.Nombre_Pago" HeaderText="Medio de Pago" />
-                        </columns>
+                        </Columns>
                     </asp:GridView>
                 </div>
             </div>
-    <div class="mt-3 d-flex flex-wrap gap-5 align-items-center">
-    <div class="d-flex align-items-center gap-2">
-        <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por Medio de Pago:" />
-        <asp:DropDownList ID="ddlFiltroMedioPago" runat="server" CssClass="form-select" style="max-width: 200px;">
-            <asp:ListItem Text="-- Seleccione --" Value="" />
-        </asp:DropDownList>
-        <asp:Button ID="btnFiltrarMedioPago" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnFiltrarMedioPago_Click" />
-    </div>
-    <div class="d-flex align-items-center gap-2">
-        <asp:Label ID="lblFiltroPedido" runat="server" Text="Filtrar por Número de Pedido:" />
-        <asp:TextBox ID="txtFiltroPedido" runat="server" CssClass="form-control" style="max-width: 200px;" />
-        <asp:Button ID="btnFiltrarPedido" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="btnFiltrarPedido_Click" />
-    </div>
-</div>
+            <div class="mt-3 d-flex flex-wrap gap-5 align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por Medio de Pago:" />
+                    <asp:DropDownList ID="ddlFiltroMedioPago" runat="server" CssClass="form-select" Style="max-width: 200px;">
+                        <asp:ListItem Text="-- Seleccione --" Value="" />
+                    </asp:DropDownList>
+                    <asp:Button ID="btnFiltrarMedioPago" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnFiltrarMedioPago_Click" />
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <asp:Label ID="lblFiltroPedido" runat="server" Text="Filtrar por Número de Pedido:" />
+                    <asp:TextBox ID="txtFiltroPedido" runat="server" CssClass="form-control" Style="max-width: 200px;" />
+                    <asp:Button ID="btnFiltrarPedido" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="btnFiltrarPedido_Click" />
+                </div>
+            </div>
         </div>
 
         <!-- HISTORIAL DE PEDIDOS -->
@@ -141,25 +149,25 @@
             <h2 class="mb-4">Historial de Pedidos</h2>
             <div class="p-3 border border-dark rounded shadow-sm bg-white">
                 <div style="max-height: 500px; overflow-y: auto;">
-               <asp:GridView 
-    ID="gvPedidos" 
-    runat="server" 
-    AutoGenerateColumns="False" 
-    CssClass="table table-striped table-bordered"
-    DataKeyNames="Id_Pedido"
-    AllowPaging="false"
-    >
-    <Columns>
-       <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-        <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Número" />
-        <asp:BoundField DataField="MesaAsignada.Nro_Mesa" HeaderText="Nro Mesa" />
-        <asp:TemplateField HeaderText="Estado">
-            <ItemTemplate>
-                <%# Convert.ToInt32(Eval("Id_Estado")) == 3 ? "Activo" : (Convert.ToInt32(Eval("Id_Estado")) == 4 ? "Cerrado" : "Desconocido") %>
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>
+                    <asp:GridView
+                        ID="gvPedidos"
+                        runat="server"
+                        AutoGenerateColumns="False"
+                        CssClass="table table-striped table-bordered"
+                        DataKeyNames="Id_Pedido"
+                        AllowPaging="false">
+                        <Columns>
+                            <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                            <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Número" />
+                            <asp:BoundField DataField="MesaAsignada.Nro_Mesa" HeaderText="Nro Mesa" />
+                            <asp:BoundField DataField="Nro_Legajo" HeaderText="Legajo" />
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate>
+                                    <%# Convert.ToInt32(Eval("Id_Estado")) == 3 ? "Activo" : (Convert.ToInt32(Eval("Id_Estado")) == 4 ? "Cerrado" : "Desconocido") %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </div>
             </div>
         </div>
@@ -199,6 +207,7 @@
                 </ul>
             </div>
         </div>
-
+      
+     
     </div>
 </asp:Content>

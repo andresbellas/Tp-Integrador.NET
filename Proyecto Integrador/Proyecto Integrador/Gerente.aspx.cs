@@ -16,11 +16,8 @@ namespace Proyecto_Integrador
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-
             if (!IsPostBack)
             {
-                // lo que ya tenías...
                 List<Mesa> mesas = new List<Mesa>();
                 L_Mesa l_Mesa = new L_Mesa();
                 mesas = l_Mesa.ListarMesas();
@@ -33,7 +30,7 @@ namespace Proyecto_Integrador
 
                 gvMesas.DataSource = mesas;
                 gvMesas.DataBind();
-
+                 
                 // cargar métodos de pago
                 L_MedioDePago logicaMedios = new L_MedioDePago();
                 List<MedioDePago> listaMedios = logicaMedios.ListarMedios();
@@ -42,7 +39,6 @@ namespace Proyecto_Integrador
                 ddlFiltroMedioPago.DataTextField = "Nombre_Pago";
                 ddlFiltroMedioPago.DataValueField = "Id_Pago";
                 ddlFiltroMedioPago.DataBind();
-
                 ddlFiltroMedioPago.Items.Insert(0, new ListItem("-- Seleccione --", ""));
             }
 
@@ -268,7 +264,7 @@ namespace Proyecto_Integrador
                 List<Cobranza> listaCobranzas = l_cobranza.ListarCobranzas();
 
                 var filtradas = listaCobranzas
-                    .Where(c => c.Id_Pedido == numeroPedido)
+                    .Where(c => c.Nro_Pedido == numeroPedido)
                     .ToList();
 
                 gvCobranzas.DataSource = filtradas;
@@ -279,11 +275,6 @@ namespace Proyecto_Integrador
                 
             }
         }
-
-
-
-
-
 
 
 

@@ -18,10 +18,11 @@ namespace Logica
 
             try
             {
-                conexion.Consulta(@"SELECT c.id_cobranza, c.Id_Pago, c.Id_Pedido, c.Total, 
+                conexion.Consulta(@"SELECT c.id_cobranza, c.Id_Pago, c.Total, p.Nro_Pedido,
                                            m.Nombre_Pago, m.Descripcion, m.Habilitado
                                     FROM Cobranza c
-                                    JOIN MedioDePago m ON c.Id_Pago = m.Id_Pago
+                                    INNER JOIN MedioDePago m ON c.Id_Pago = m.Id_Pago
+                                    INNER JOIN Pedidos p ON c.Id_Pedido = p.Id_Pedido
                                     WHERE m.Habilitado = 1");
 
                 conexion.Ejecutar();
@@ -30,7 +31,7 @@ namespace Logica
                 {
                     Cobranza aux = new Cobranza();
                     aux.id_cobranza = (int)conexion.Lector["id_cobranza"];
-                    aux.Id_Pedido = (int)conexion.Lector["Id_Pedido"];
+                    aux.Nro_Pedido = Convert.ToInt32(conexion.Lector["Nro_Pedido"]);
                     aux.Total = Convert.ToSingle(conexion.Lector["Total"]);
 
                     aux.MedioDePago = new MedioDePago();

@@ -18,5 +18,6 @@ namespace Entidades
 
         public MedioDePago MedioDePago { get; set; }
 
+        public int Nro_Pedido { get; set; }
     }
 }

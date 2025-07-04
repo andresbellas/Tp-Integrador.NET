@@ -18,7 +18,7 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT p.Id_pedido, p.Nro_Pedido, p.Fecha_Pedido, p.Id_Estado, m.Id_mesa, m.Nro_Mesa FROM Pedidos p JOIN Mesa m ON p.Id_Mesa = m.Id_mesa");
+                conexion.Consulta("SELECT p.Id_pedido, p.Nro_Pedido, p.Fecha_Pedido, p.Id_Estado, p.Nro_Legajo, m.Id_mesa, m.Nro_Mesa FROM Pedidos p JOIN Mesa m ON p.Id_Mesa = m.Id_mesa");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())
@@ -28,6 +28,7 @@ namespace Logica
                     aux.Nro_Pedido = Convert.ToInt32(conexion.Lector["Nro_Pedido"]);
                     aux.Fecha_Pedido = Convert.ToDateTime(conexion.Lector["Fecha_Pedido"]);
                     aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
+                    aux.Nro_Legajo = Convert.ToInt32(conexion.Lector["Nro_Legajo"]);
 
                     aux.MesaAsignada = new Mesa();
                     aux.MesaAsignada.Id_mesa = (int)conexion.Lector["Id_mesa"];
