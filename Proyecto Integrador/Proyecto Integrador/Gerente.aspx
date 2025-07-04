@@ -150,9 +150,9 @@
     AllowPaging="false"
     >
     <Columns>
-        <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
        <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
         <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Número" />
+        <asp:BoundField DataField="MesaAsignada.Nro_Mesa" HeaderText="Nro Mesa" />
         <asp:TemplateField HeaderText="Estado">
             <ItemTemplate>
                 <%# Convert.ToInt32(Eval("Id_Estado")) == 3 ? "Activo" : (Convert.ToInt32(Eval("Id_Estado")) == 4 ? "Cerrado" : "Desconocido") %>
