@@ -19,10 +19,7 @@
             <asp:TextBox ID="txtMontoTotal" runat="server" CssClass="form-control" ReadOnly="true" />
         </div>
 
-        <div class="mb-3">
-            <label for="txtNombreCliente" class="form-label">Nombre Cliente:</label>
-            <asp:TextBox ID="txtNombreCliente" runat="server" CssClass="form-control" />
-        </div>
+        
 
         <div class="d-flex justify-content-between mt-4">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
