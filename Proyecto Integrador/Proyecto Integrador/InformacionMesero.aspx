@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="InformacionMesero.aspx.cs" Inherits="Proyecto_Integrador.InfomormacionMesero" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -51,15 +52,19 @@
         <%-- New Panel for Assign Employee --%>
         <asp:Panel ID="pnlAsignarMesero" runat="server" Visible="false">
             <h3 class="mb-4 text-center text-info fw-bold" style="font-size: 2rem;">Asignar Mesero</h3>
-            <div class="row mb-4 align-items-center">
+            <%--  <div class="row mb-4 align-items-center">
                 <label class="col-sm-4 col-form-label fw-semibold text-secondary" style="font-size: 1.2rem;">Legajo a Asignar:</label>
                 <div class="col-sm-8">
                     <asp:TextBox ID="txtLegajoAsignar" runat="server" CssClass="form-control fs-5 text-dark" placeholder="Ingrese el número de legajo" TextMode="Number" />
                 </div>
+            </div>--%>
+            <div class="mb-3">
+                <asp:Label ID="lblMesero" runat="server" Text="Seleccionar Mesero:"></asp:Label>
+                <asp:DropDownList ID="ddlMeseros" runat="server" CssClass="form-select" />
             </div>
             <div class="row mt-4">
                 <div class="col-sm-12 d-grid">
-                    <asp:Button ID="btnAsignar" runat="server" Text="Asignar Mesero" OnClientClick="return confirm('¿Seguro que quieres asignar?');"    OnClick="btnAsignar_Click" CssClass="btn btn-success btn-lg" />
+                    <asp:Button ID="btnAsignar" runat="server" Text="Asignar Mesero" OnClientClick="return confirm('¿Seguro que quieres asignar?');" OnClick="btnAsignar_Click" CssClass="btn btn-success btn-lg" />
                 </div>
             </div>
         </asp:Panel>

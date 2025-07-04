@@ -18,7 +18,11 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT Id_item, Id_Pedido, Sku, Cantidad, Total FROM ItemPedidos WHERE Id_Pedido = @IdPedido");
+                conexion.Consulta(@"SELECT ip.Id_item, ip.Id_Pedido, ip.Sku, ip.Cantidad, ip.Total, i.Nombre AS NombreInsumo
+                FROM ItemPedidos ip
+                INNER JOIN Insumos i ON ip.Sku = i.Sku
+                WHERE ip.Id_Pedido = @IdPedido
+        ");
                 conexion.SetParametros("@IdPedido", idPedido);
                 conexion.Ejecutar();
 
@@ -30,6 +34,10 @@ namespace Logica
                     aux.Sku = conexion.Lector["Sku"] != DBNull.Value ? conexion.Lector["Sku"].ToString() : string.Empty;
                     aux.Cantidad = conexion.Lector["Cantidad"] != DBNull.Value ? Convert.ToInt32(conexion.Lector["Cantidad"]) : 0;
                     aux.Total = (float)Convert.ToDouble(conexion.Lector["Total"]);
+
+                    // Aquí asignamos el nombre del insumo para que puedas mostrarlo en el GridView
+                    aux.NombreInsumo = conexion.Lector["NombreInsumo"] != DBNull.Value ? conexion.Lector["NombreInsumo"].ToString() : string.Empty;
+
                     lista.Add(aux);
                 }
 
@@ -44,6 +52,7 @@ namespace Logica
                 conexion.cerrarConexion();
             }
         }
+
 
         public void Agregar(ItemPedidos item)
         {
@@ -109,6 +118,33 @@ namespace Logica
                 conexion.cerrarConexion();
             }
         }
+        public ItemPedidos ObtenerPorId(int idItem)
+        {
+            Sql conexion = new Sql();
+            try
+            {
+                conexion.Consulta("SELECT Id_item, Id_Pedido, Sku, Cantidad, Total FROM ItemPedidos WHERE Id_item = @IdItem");
+                conexion.SetParametros("@IdItem", idItem);
+                conexion.Ejecutar();
 
+                if (conexion.Lector.Read())
+                {
+                    return new ItemPedidos
+                    {
+                        Id_item = (int)conexion.Lector["Id_item"],
+                        Id_Pedido = (int)conexion.Lector["Id_Pedido"],
+                        Sku = conexion.Lector["Sku"].ToString(),
+                        Cantidad = Convert.ToInt32(conexion.Lector["Cantidad"]),
+                        Total = Convert.ToSingle(conexion.Lector["Total"])
+                    };
+                }
+
+                return null;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
     }
 }

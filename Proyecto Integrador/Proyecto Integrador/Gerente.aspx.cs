@@ -209,6 +209,32 @@ namespace Proyecto_Integrador
 
         }
 
+        protected void gvMesas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "accionMesa")
+            {
+                // Obtenemos el Id_mesa desde CommandArgument
+                int idMesa = Convert.ToInt32(e.CommandArgument);
+
+                L_Mesa logicaMesa = new L_Mesa();
+                Mesa mesa = logicaMesa.BuscarPorIdMesa(idMesa);
+                Session["MesaSeleccionada"] = mesa;
+
+                // Obtenemos el estado actual para decidir qué acción hacer
+                int estadoMesa = mesa.Id_Estado;
+
+                if (estadoMesa == 1) // 1 = Libre, Abrir Pedido
+                {
+                    // Podés crear el pedido aquí o derivar para crearlo
+                    Response.Redirect("Pedido.aspx?modo=abrir");
+                }
+                else
+                {
+                    // Mesa ocupada, gestionamos pedido
+                    Response.Redirect("Pedido.aspx?modo=gestionar");
+                }
+            }
+        }
 
 
     }

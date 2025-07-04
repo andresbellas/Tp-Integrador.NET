@@ -72,6 +72,32 @@ namespace Proyecto_Integrador
         }
 
 
+        protected void gvMesas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "accionMesa")
+            {
+                int idMesa = Convert.ToInt32(e.CommandArgument);
+
+                // Obtener el estado actual de la mesa para decidir modo
+                L_Mesa l_mesa = new L_Mesa();
+                Mesa mesa = l_mesa.BuscarPorIdMesa(idMesa);
+
+                if (mesa != null)
+                {
+
+                    Session["MesaSeleccionada"] = mesa;
+
+                    if (mesa.Id_Estado == 1) // Libre
+                    {
+                        Response.Redirect($"Pedido.aspx?modo=abrir&idMesa={idMesa}");
+                    }
+                    else // Ocupada
+                    {
+                        Response.Redirect($"Pedido.aspx?modo=gestionar&idMesa={idMesa}");
+                    }
+                }
+            }
+        }
 
 
 

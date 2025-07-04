@@ -14,6 +14,8 @@ namespace Entidades
         public int? Nro_Legajo { get; set; }
 
         public int Id_Estado {  get; set; }
+
+        public string NombreEstado { get; set; }
     }
 }
     

@@ -300,7 +300,46 @@ namespace Logica
 
 
 
+        public List<Empleados> ListarMeserosDisponibles()
+        {
+            List<Empleados> meseros = new List<Empleados>();
+            Sql sql = new Sql();
 
+            try
+            {
+                sql.Consulta(@"SELECT e.Id_Empleado, e.Nro_Legajo, e.Nombre, e.Apellido, e.Id_Usuario, e.Id_Rol, e.Baja, 
+                   u.Usuario AS NombreUsuario, u.Contraseña, 
+                   r.Nombre_Rol, r.Descripcion
+                   FROM Empleados e
+                   JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario
+                   JOIN Rol r ON e.Id_Rol = r.Id_Rol
+                   WHERE r.Nombre_Rol = 'mesero'
+                   AND e.Baja = 0
+                   AND (SELECT COUNT(*) FROM Mesa m WHERE m.Nro_Legajo = e.Nro_Legajo ) < 5");
+
+                sql.Ejecutar();
+                while (sql.Lector.Read())
+                {
+                    Empleados emp = new Empleados();
+
+                    emp.Nro_Legajo = Convert.ToInt32(sql.Lector["Nro_Legajo"]);
+                    emp.Nombre = $"{sql.Lector["Nombre"]} {sql.Lector["Apellido"]}";
+
+                    meseros.Add(emp);
+                }
+
+
+                return meseros;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sql.cerrarConexion();
+            }
+        }
 
 
 

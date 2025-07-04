@@ -19,7 +19,10 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT Id_Mesa, Nro_Mesa, Nro_Legajo, Id_Estado FROM Mesa");
+                conexion.Consulta(@"SELECT m.Id_Mesa, m.Nro_Mesa, m.Nro_Legajo, m.Id_Estado,
+                e.Nombre_Estado
+                FROM Mesa m
+                JOIN Estado e ON m.Id_Estado = e.Id_Estado");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())
@@ -29,6 +32,7 @@ namespace Logica
                     aux.Nro_Mesa = Convert.ToInt32(conexion.Lector["Nro_Mesa"]);
                     aux.Nro_Legajo = conexion.Lector["Nro_Legajo"] == DBNull.Value ? 0 : Convert.ToInt32(conexion.Lector["Nro_Legajo"]);
                     aux.Id_Estado = (int)conexion.Lector["Id_Estado"];
+                    aux.NombreEstado = conexion.Lector["Nombre_Estado"].ToString();  // NUEVO: agregar propiedad para mostrar
 
                     lista.Add(aux);
                 }
@@ -44,6 +48,7 @@ namespace Logica
                 conexion.cerrarConexion();
             }
         }
+
 
         public void AgregarMesa(Mesa mesa)
         {
@@ -147,19 +152,25 @@ namespace Logica
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public void CambiarEstadoMesa(int idMesa, int nuevoEstado)
+        {
+            Sql conexion = new Sql();
+            try
+            {
+                conexion.Consulta("UPDATE Mesa SET Id_Estado = @NuevoEstado WHERE Id_Mesa = @IdMesa");
+                conexion.SetParametros("@NuevoEstado", nuevoEstado);
+                conexion.SetParametros("@IdMesa", idMesa);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
 
 
 

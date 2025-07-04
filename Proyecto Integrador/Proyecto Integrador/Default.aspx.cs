@@ -23,13 +23,13 @@ namespace Proyecto_Integrador
             if (!IsPostBack)
             {
                 Session.Abandon();
-                txtUsername.Text = "";
+                txtUsername.Text = "bulariaga";
                 txtPassword.Text = "";
                 lblError.Text = "";
             }
         }
-           
-        
+
+
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
@@ -41,58 +41,56 @@ namespace Proyecto_Integrador
             {
                 L_Usuario logicaUsuario = new L_Usuario();
 
-                /* Para pruebaa */
-                if (usuario == "gerente" && contraseña == "123")
-                {
-                    Session["usuario"] = "gerente";
-                    Session["idUsuario"] = 0;
-                    Session["nombre_rol"] = "gerente";
+                ///* Para pruebas */
+                //if (usuario == "gerente" && contraseña == "123")
+                //{
+                //    // Suponemos que gerente tiene nroLegajo 0 o similar
+                //    Session["usuario"] = "gerente";
+                //    Session["idUsuario"] = 0;
+                //    Session["nombre_rol"] = "gerente";
+                //    Session["nroLegajo"] = 0;  // Guardamos nroLegajo en sesión
 
-                    //CUIDADO BRAIAN, CAMBIE QUE EL CERRAR SESSION SEA CON EMPLEADO
-                    Response.Redirect("Gerente.aspx");
-                    return;
-                }
-                else if (usuario == "mesero" && contraseña == "123")
-                {
-                    Session["usuario"] = "mesero";
-                    Session["idUsuario"] = 1;
-                    Session["nombre_rol"] = "mesero";
+                //    Response.Redirect("Gerente.aspx");
+                //    return;
+                //}
+                //else if (usuario == "mesero" && contraseña == "123")
+                //{
+                //    // Aquí debería obtenerse el nroLegajo real, para el ejemplo pongo 1
+                //    int nroLegajoPrueba = 1;
+                //    Session["usuario"] = "mesero";
+                //    Session["idUsuario"] = 1;
+                //    Session["nombre_rol"] = "mesero";
+                //    Session["nroLegajo"] = nroLegajoPrueba;  // Guardamos nroLegajo
 
+                //    Response.Redirect("Mesero.aspx");
+                //    return;
+                //}
 
-                    Response.Redirect("Mesero.aspx");
-                    return;
-                }
-
-
-                
                 if (logicaUsuario.Login(usuario, contraseña, out idUsuario))
                 {
-
                     Session["usuario"] = usuario;
-                  
-                   
-                    //Busco el empleado por el ID usuario
+
+                    // Busco el empleado por el ID usuario
                     L_Empleados logica = new L_Empleados();
-                    Empleados empleado = new Empleados();
-                    empleado = logica.EmpleadoPorIdUsuario(idUsuario);
+                    Empleados empleado = logica.EmpleadoPorIdUsuario(idUsuario);
 
                     Session["empleado"] = empleado;
 
+                    // Guardar nroLegajo en sesión
+                    Session["nroLegajo"] = empleado.Nro_Legajo;
+
                     if (empleado.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
                     {
-
                         Response.Redirect("Gerente.aspx");
                     }
-                    else if(empleado.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
+                    else if (empleado.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
                     {
-                        
                         Response.Redirect("Mesero.aspx");
                     }
                     else
                     {
-                        lblError.Text = "El rol " + empleado.RolEmpleado.Nombre_rol.ToUpper() + " no es valido";
+                        lblError.Text = "El rol " + empleado.RolEmpleado.Nombre_rol.ToUpper() + " no es válido";
                     }
-                    
                 }
                 else
                 {

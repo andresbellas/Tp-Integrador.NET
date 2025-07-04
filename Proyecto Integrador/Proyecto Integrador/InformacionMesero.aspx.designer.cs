@@ -87,13 +87,22 @@ namespace Proyecto_Integrador
         protected global::System.Web.UI.WebControls.Panel pnlAsignarMesero;
 
         /// <summary>
-        /// Control txtLegajoAsignar.
+        /// Control lblMesero.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLegajoAsignar;
+        protected global::System.Web.UI.WebControls.Label lblMesero;
+
+        /// <summary>
+        /// Control ddlMeseros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMeseros;
 
         /// <summary>
         /// Control btnAsignar.

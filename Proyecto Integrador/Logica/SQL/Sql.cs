@@ -54,6 +54,7 @@ namespace Logica.SQL
         {
             try
             {
+                comando.Parameters.Clear(); // Limpiar parámetros anteriores
                 comando.CommandType = System.Data.CommandType.Text; // Tipo de comando a ajecutar en el SQL, text(query), storeproceduire(SP)
                 comando.CommandText = consulta; //Pasamos la consulta por parametro
 
@@ -76,7 +77,7 @@ namespace Logica.SQL
             try
             {
                 conexion.Open(); // abrimos conexion
-                lector = comando.ExecuteReader(); // Leemos el reusltado del query
+                lector = comando.ExecuteReader(CommandBehavior.CloseConnection); // Leemos el reusltado del query
 
             }
             catch (Exception ex)
@@ -95,13 +96,17 @@ namespace Logica.SQL
             try
             {
                 conexion.Open(); // abrimos conexion
-                comando.ExecuteReader(); // Leemos el reusltado del query sin guardarlo
+                comando.ExecuteNonQuery(); // Leemos el reusltado del query sin guardarlo
 
             }
             catch (Exception ex)
             {
 
                 throw ex;
+            }
+            finally
+            {
+                conexion.Close();
             }
 
 

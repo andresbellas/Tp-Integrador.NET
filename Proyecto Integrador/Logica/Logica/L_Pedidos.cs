@@ -52,17 +52,40 @@ namespace Logica
             }
         }
 
-        public void Agregar(Pedidos pedido)
+        public Pedidos Agregar(Pedidos pedido)
         {
             Sql conexion = new Sql();
             try
             {
-                conexion.Consulta("INSERT INTO Pedidos (Nro_Pedido, Fecha_Pedido, Id_Mesa, Id_Estado) VALUES (@Nro_Pedido, @Fecha_Pedido, @Id_Mesa, @Id_Estado)");
-                conexion.SetParametros("@Nro_Pedido", pedido.Nro_Pedido);
+                // Obtener el próximo número de pedido desde la SEQUENCE
+                conexion.Consulta("SELECT NEXT VALUE FOR Seq_NroPedido AS NroPedido");
+                conexion.Ejecutar();
+
+                long nroPedidoGenerado = 0;
+                if (conexion.Lector.Read())
+                {
+                    nroPedidoGenerado = Convert.ToInt64(conexion.Lector["NroPedido"]);
+                }
+                conexion.Lector.Close();
+
+                // Insertar pedido y obtener el Id_Pedido autogenerado
+                conexion.Consulta(@"INSERT INTO Pedidos (Nro_Pedido, Fecha_Pedido, Id_Mesa, Id_Estado, Nro_Legajo)
+                            OUTPUT INSERTED.Id_Pedido
+                            VALUES (@Nro_Pedido, @Fecha_Pedido, @Id_Mesa, @Id_Estado, @Nro_Legajo)");
+
+                conexion.SetParametros("@Nro_Pedido", nroPedidoGenerado);
                 conexion.SetParametros("@Fecha_Pedido", pedido.Fecha_Pedido);
                 conexion.SetParametros("@Id_Mesa", pedido.MesaAsignada.Id_mesa);
                 conexion.SetParametros("@Id_Estado", pedido.Id_Estado);
-                conexion.EjecutarAccion();
+                conexion.SetParametros("@Nro_Legajo", pedido.Nro_Legajo);  // nuevo parámetro
+
+                int idGenerado = (int)conexion.EjecutarScalar();
+
+                // Actualizar el objeto con los datos generados
+                pedido.Id_pedido = idGenerado;
+                pedido.Nro_Pedido = nroPedidoGenerado;
+
+                return pedido;
             }
             catch (Exception ex)
             {
@@ -73,6 +96,8 @@ namespace Logica
                 conexion.cerrarConexion();
             }
         }
+
+
 
         public void Modificar(Pedidos pedido)
         {
@@ -118,32 +143,30 @@ namespace Logica
 
 
 
+        public int ObtenerPedidoActivo(int idMesa)
+        {
+            Sql conexion = new Sql();
+            try
+            {
+                conexion.Consulta("SELECT TOP 1 Id_Pedido FROM Pedidos WHERE Id_Mesa = @idMesa AND Id_Estado = 3 ORDER BY Fecha_Pedido DESC");
+                conexion.SetParametros("@idMesa", idMesa);
+                conexion.Ejecutar();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                if (conexion.Lector.Read())
+                {
+                    return Convert.ToInt32(conexion.Lector["Id_Pedido"]);
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
 
 
 

@@ -19,6 +19,7 @@ namespace Entidades
 
         public float Total { get; set; }
 
+        public string NombreInsumo { get; set; }
 
     }
 }
