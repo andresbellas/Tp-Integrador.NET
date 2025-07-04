@@ -2,8 +2,6 @@
 using Logica;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,7 +9,6 @@ namespace Proyecto_Integrador
 {
     public partial class Pedido : System.Web.UI.Page
     {
-        // Ejemplo para almacenar el pedido actual (puede ser Session o DB)
         private int IdMesa;
         private int IdPedido;
         L_Insumos l_Insumos = new L_Insumos();
@@ -22,7 +19,6 @@ namespace Proyecto_Integrador
         {
             if (!IsPostBack)
             {
-                // Validación de sesión de mesa
                 Mesa mesa = Session["MesaSeleccionada"] as Mesa;
                 if (mesa == null)
                 {
@@ -30,12 +26,10 @@ namespace Proyecto_Integrador
                     return;
                 }
 
-                // Guardar y mostrar mesa
                 IdMesa = mesa.Id_mesa;
                 Session["IdMesa"] = IdMesa;
                 lblNroMesa.Text = mesa.Nro_Mesa.ToString();
 
-                // Obtener empleado (mesero o gerente)
                 Empleados empleadoActual = Session["empleado"] as Empleados;
                 if (empleadoActual == null)
                 {
@@ -45,48 +39,37 @@ namespace Proyecto_Integrador
 
                 lblNombreMesero.Text = $"{empleadoActual.Nombre} {empleadoActual.Apellido}";
 
-                // Guardar legajo (si no está ya en sesión)
                 if (Session["nroLegajo"] == null)
                     Session["nroLegajo"] = empleadoActual.Nro_Legajo;
 
                 lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
-                // Abrir o gestionar pedido
-                string modo = Request.QueryString["modo"];
+                // buscar si ya hay pedido activo
                 L_Pedidos logicaPedidos = new L_Pedidos();
+                IdPedido = logicaPedidos.ObtenerPedidoActivo(IdMesa);
 
-                if (modo == "abrir")
+                if (IdPedido != 0)
                 {
-                    IdPedido = CrearPedidoNuevo(IdMesa, empleadoActual.Nro_Legajo);
-                }
-                else if (modo == "gestionar")
-                {
-                    IdPedido = logicaPedidos.ObtenerPedidoActivo(IdMesa);
-                    if (IdPedido == 0)
-                    {
-                        int nroLegajo = empleadoActual.Nro_Legajo; // asegurate que tenés el legajo del empleado actual
-                        IdPedido = CrearPedidoNuevo(IdMesa, nroLegajo);
-                    }
+                    Session["IdPedido"] = IdPedido;
+                    btnCancelarPedido.Visible = true;
                 }
                 else
                 {
-                    RedirigirAlInicio();
-                    return;
+                    btnCancelarPedido.Visible = false;
                 }
-
-                Session["IdPedido"] = IdPedido;
 
                 CargarInsumosDisponibles();
                 CargarItemsPedido();
             }
             else
             {
-                // Postback: recuperar valores
                 if (Session["IdPedido"] != null)
                     IdPedido = (int)Session["IdPedido"];
 
                 if (Session["IdMesa"] != null)
                     IdMesa = (int)Session["IdMesa"];
+
+                btnCancelarPedido.Visible = Session["IdPedido"] != null;
             }
         }
 
@@ -97,24 +80,27 @@ namespace Proyecto_Integrador
 
         private void CargarInsumosDisponibles()
         {
-
             List<Insumos> insumos = l_Insumos.ListarInsumos();
-
             ddlInsumos.DataSource = insumos;
             ddlInsumos.DataTextField = "Nombre";
             ddlInsumos.DataValueField = "Sku";
             ddlInsumos.DataBind();
-
             ddlInsumos.Items.Insert(0, new ListItem("--Seleccione un insumo--", "0"));
         }
 
         private void CargarItemsPedido()
         {
-
-            List<ItemPedidos> items = l_ItemPedidos.ListarPorPedido(IdPedido);
-
-            gvItemsPedido.DataSource = items;
-            gvItemsPedido.DataBind();
+            if (IdPedido != 0)
+            {
+                List<ItemPedidos> items = l_ItemPedidos.ListarPorPedido(IdPedido);
+                gvItemsPedido.DataSource = items;
+                gvItemsPedido.DataBind();
+            }
+            else
+            {
+                gvItemsPedido.DataSource = null;
+                gvItemsPedido.DataBind();
+            }
         }
 
         protected void gvItemsPedido_RowEdit(object sender, GridViewEditEventArgs e)
@@ -132,21 +118,17 @@ namespace Proyecto_Integrador
         protected void gvItemsPedido_RowUpdate(object sender, GridViewUpdateEventArgs e)
         {
             int idItem = Convert.ToInt32(gvItemsPedido.DataKeys[e.RowIndex].Value);
-
             GridViewRow fila = gvItemsPedido.Rows[e.RowIndex];
-            TextBox txtCantidad = (TextBox)fila.Cells[2].Controls[0]; // Asegúrate que sea la columna de cantidad
+            TextBox txtCantidad = (TextBox)fila.Cells[2].Controls[0];
 
             if (int.TryParse(txtCantidad.Text, out int nuevaCantidad) && nuevaCantidad > 0)
             {
                 string sku = fila.Cells[0].Text;
 
-                // 1. Obtener la cantidad actual desde BD
-                ItemPedidos itemActual = l_ItemPedidos.ObtenerPorId(idItem); // Tenés que tener este método en tu lógica
+                ItemPedidos itemActual = l_ItemPedidos.ObtenerPorId(idItem);
                 int cantidadAnterior = itemActual.Cantidad;
-
                 int diferencia = nuevaCantidad - cantidadAnterior;
 
-                // 2. Si se quiere aumentar la cantidad, validamos el stock disponible
                 if (diferencia > 0)
                 {
                     bool hayStock = l_Insumos.HayStockSuficiente(sku, diferencia);
@@ -158,11 +140,9 @@ namespace Proyecto_Integrador
                     }
                 }
 
-                // 3. Obtener precio actual del insumo
                 double precio = l_Insumos.ObtenerPrecioInsumo(sku);
                 float nuevoTotal = (float)(nuevaCantidad * precio);
 
-                // 4. Actualizar ítem
                 ItemPedidos itemModificado = new ItemPedidos
                 {
                     Id_item = idItem,
@@ -176,9 +156,8 @@ namespace Proyecto_Integrador
                 {
                     l_ItemPedidos.Modificar(itemModificado);
 
-                    // 5. Actualizar stock:
                     if (diferencia != 0)
-                        l_Insumos.ActualizarStockInsumo(sku, -diferencia); // si diferencia < 0, suma stock
+                        l_Insumos.ActualizarStockInsumo(sku, -diferencia);
 
                     gvItemsPedido.EditIndex = -1;
                     CargarItemsPedido();
@@ -196,13 +175,22 @@ namespace Proyecto_Integrador
             }
         }
 
+
         protected void gvItemsPedido_RowDelete(object sender, GridViewDeleteEventArgs e)
         {
             int idItem = Convert.ToInt32(gvItemsPedido.DataKeys[e.RowIndex].Value);
 
             try
             {
+                // 1) obtener el item antes de borrarlo
+                ItemPedidos item = l_ItemPedidos.ObtenerPorId(idItem);
+
+                // 2) devolver stock
+                l_Insumos.ActualizarStockInsumo(item.Sku, -item.Cantidad);
+
+                // 3) eliminar el ítem
                 l_ItemPedidos.Eliminar(idItem, IdPedido);
+
                 CargarItemsPedido();
             }
             catch (Exception ex)
@@ -211,6 +199,9 @@ namespace Proyecto_Integrador
                 lblMensaje.Visible = true;
             }
         }
+
+
+
 
         protected void btnAgregarInsumo_Click(object sender, EventArgs e)
         {
@@ -231,9 +222,8 @@ namespace Proyecto_Integrador
             }
 
             string skuSeleccionado = ddlInsumos.SelectedValue;
-
             bool haystock = l_Insumos.HayStockSuficiente(skuSeleccionado, cantidad);
-            // Verificar stock suficiente antes de agregar
+
             if (!haystock)
             {
                 lblMensaje.Text = "No hay stock suficiente para el insumo seleccionado.";
@@ -241,7 +231,6 @@ namespace Proyecto_Integrador
                 return;
             }
 
-            // Obtener el precio actual del insumo para calcular total
             double precio = l_Insumos.ObtenerPrecioInsumo(skuSeleccionado);
             if (precio <= 0)
             {
@@ -250,7 +239,19 @@ namespace Proyecto_Integrador
                 return;
             }
 
-            // Crear el item a agregar
+            // Crear el pedido si no existe todavía
+            if (Session["IdPedido"] == null)
+            {
+                int nroLegajo = (int)Session["nroLegajo"];
+                IdPedido = CrearPedidoNuevo(IdMesa, nroLegajo);
+                Session["IdPedido"] = IdPedido;
+                btnCancelarPedido.Visible = true;
+            }
+            else
+            {
+                IdPedido = (int)Session["IdPedido"];
+            }
+
             ItemPedidos nuevoItem = new ItemPedidos
             {
                 Id_Pedido = IdPedido,
@@ -261,13 +262,8 @@ namespace Proyecto_Integrador
 
             try
             {
-                // Agregar item al pedido
                 l_ItemPedidos.Agregar(nuevoItem);
-
-                // Actualizar stock en base de datos (restar la cantidad)
                 l_Insumos.ActualizarStockInsumo(skuSeleccionado, cantidad);
-
-                // Recargar lista y limpiar controles
                 CargarItemsPedido();
                 ddlInsumos.SelectedIndex = 0;
                 txtCantidad.Text = "";
@@ -279,24 +275,23 @@ namespace Proyecto_Integrador
             }
         }
 
-
         private int CrearPedidoNuevo(int idMesa, int nroLegajo)
         {
-            Pedidos nuevo = new Pedidos();
-            nuevo.Fecha_Pedido = DateTime.Now;
-            nuevo.MesaAsignada = new Mesa { Id_mesa = idMesa };
-            nuevo.Id_Estado = 3; // Estado Activo
-            nuevo.Nro_Legajo = nroLegajo; // asigno el legajo
+            Pedidos nuevo = new Pedidos
+            {
+                Fecha_Pedido = DateTime.Now,
+                MesaAsignada = new Mesa { Id_mesa = idMesa },
+                Id_Estado = 3, // Activo
+                Nro_Legajo = nroLegajo
+            };
 
-            Pedidos pedidoCreado = l_Pedidos.Agregar(nuevo); // Devuelve el objeto completo
+            Pedidos pedidoCreado = l_Pedidos.Agregar(nuevo);
 
-            // Cambiar estado de la mesa
             L_Mesa l_mesa = new L_Mesa();
-            l_mesa.CambiarEstadoMesa(idMesa, 2); // Estado Ocupado
+            l_mesa.CambiarEstadoMesa(idMesa, 2); // Ocupado
 
             return pedidoCreado.Id_pedido;
         }
-
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
@@ -304,28 +299,82 @@ namespace Proyecto_Integrador
             if (empleado != null)
             {
                 string rol = empleado.RolEmpleado.Nombre_rol.ToLower();
-
                 if (rol == "gerente")
-                {
                     Response.Redirect("Gerente.aspx");
-                }
                 else if (rol == "mesero")
-                {
                     Response.Redirect("Mesero.aspx");
-                }
                 else
-                {
-                    // Por si hay otro rol, redirigir a una página por defecto
                     Response.Redirect("Default.aspx");
-                }
             }
             else
             {
-                // Si no hay empleado en sesión, también redirigir a login o página default
                 Response.Redirect("Default.aspx");
             }
         }
 
-    }
 
+
+        protected void btnCancelarPedido_Click(object sender, EventArgs e)
+        {
+            if (Session["IdPedido"] != null)
+            {
+                int idPedido = (int)Session["IdPedido"];
+
+                try
+                {
+                    // 1) recuperar todos los ítems del pedido
+                    List<ItemPedidos> items = l_ItemPedidos.ListarPorPedido(idPedido);
+
+                    // 2) devolver stock de cada ítem
+                    foreach (ItemPedidos item in items)
+                    {
+                        l_Insumos.ActualizarStockInsumo(item.Sku, -item.Cantidad);
+                    }
+
+                    // 3) eliminar todos los ítems
+                    foreach (ItemPedidos item in items)
+                    {
+                        l_ItemPedidos.Eliminar(item.Id_item, idPedido);
+                    }
+
+                    // 4) eliminar el pedido
+                    l_Pedidos.Eliminar(idPedido);
+
+                    // 5) cambiar mesa a libre
+                    if (Session["IdMesa"] != null)
+                    {
+                        int idMesa = (int)Session["IdMesa"];
+                        L_Mesa l_mesa = new L_Mesa();
+                        l_mesa.CambiarEstadoMesa(idMesa, 1);
+                    }
+
+                    Session.Remove("IdPedido");
+                    btnCancelarPedido.Visible = false;
+
+                    Empleados empleadoActual = Session["empleado"] as Empleados;
+
+                    if (empleadoActual.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
+                        Response.Redirect("Mesero.aspx", false);
+                    else if (empleadoActual.RolEmpleado.Nombre_rol.ToUpper() == "GERENTE")
+                        Response.Redirect("Gerente.aspx", false);
+                    else
+                        Response.Redirect("Default.aspx", false);
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error al cancelar el pedido: " + ex.Message;
+                    lblMensaje.Visible = true;
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+    }
 }

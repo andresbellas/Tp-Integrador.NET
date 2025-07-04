@@ -139,7 +139,7 @@
                         <columns>
                             <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
                             <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" />
-                            <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Numero" DataFormatString="{0:C}" />
+                           <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Numero" />
                         </columns>
                     </asp:GridView>
                 </div>

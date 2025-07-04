@@ -169,6 +169,33 @@ namespace Logica
         }
 
 
+        public void EliminarPedido(int idPedido)
+        {
+            Sql conexion = new Sql();
+            try
+            {
+                // 1) Borrar primero los ítems del pedido (ItemPedidos)
+                conexion.Consulta("DELETE FROM ItemPedidos WHERE Id_Pedido = @IdPedido");
+                conexion.SetParametros("@IdPedido", idPedido);
+                conexion.EjecutarAccion();
 
+                // 2) Luego borrar el pedido
+                conexion.Consulta("DELETE FROM Pedidos WHERE Id_pedido = @IdPedido");
+                conexion.SetParametros("@IdPedido", idPedido);
+                conexion.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+
+
+
+
+        }
     }
 }
