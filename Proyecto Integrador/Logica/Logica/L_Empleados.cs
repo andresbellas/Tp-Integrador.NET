@@ -19,7 +19,15 @@ namespace Logica
 
             try
             {
-                conexion.Consulta("SELECT e.Id_Empleado, e.Nro_Legajo, e.Nombre, e.Apellido, e.Id_Usuario, e.Id_Rol, e.Baja, u.Usuario AS NombreUsuario, u.Contraseña, r.Nombre_Rol, r.Descripcion FROM Empleados e JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario JOIN Rol r ON e.Id_Rol = r.Id_Rol");
+                conexion.Consulta(@"
+            SELECT e.Id_Empleado, e.Nro_Legajo, e.Nombre, e.Apellido, e.Id_Usuario, e.Id_Rol, e.Baja, 
+                   u.Usuario AS NombreUsuario, u.Contraseña, 
+                   r.Nombre_Rol, r.Descripcion 
+            FROM Empleados e 
+            JOIN Usuarios u ON e.Id_Usuario = u.Id_Usuario 
+            JOIN Rol r ON e.Id_Rol = r.Id_Rol
+            WHERE e.Baja = 0 AND r.Baja = 0
+        ");
                 conexion.Ejecutar();
 
                 while (conexion.Lector.Read())
