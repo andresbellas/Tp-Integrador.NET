@@ -49,26 +49,7 @@ namespace Proyecto_Integrador
 
         protected void Accion_Click(object sender, EventArgs e)
         {
-            var boton = (System.Web.UI.WebControls.LinkButton)sender;
-            string accion = boton.CommandArgument;
-
-            switch (accion)
-            {
-                case "abrirPed":
-                    
-                    break;
-                case "cancelarPed":
-                    
-                    break;
-                case "cerrarPed":
-                    
-                    break;
-                case "listarInsumos":
-                    
-                    break;
-                default:
-                    break;
-            }
+            Response.Redirect("ABM_Insumos.aspx?modo=listarInsumos");
         }
 
 

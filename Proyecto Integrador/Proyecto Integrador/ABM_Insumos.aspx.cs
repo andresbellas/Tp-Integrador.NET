@@ -167,11 +167,12 @@ namespace Proyecto_Integrador
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            string modo = ModoABM;  // Guardamos el valor antes de limpiar
+            string modo = ModoABM; 
 
             LimpiarFormulario();
             ModoABM = null;
             lblMensaje.Text = "";
+            Empleados emp = Session["empleado"] as Empleados;
 
             if (modo == "altaInsumo")
             {
@@ -181,15 +182,28 @@ namespace Proyecto_Integrador
             {
                 Response.Redirect($"ABM_Insumos.aspx?modo={modo}");
             }
+            else if(emp.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
+            {
+                Response.Redirect("Mesero.aspx",false);
+            }
             else
             {
-                Response.Redirect("Gerente.aspx");
+                Response.Redirect("Gerente.aspx", false);
             }
         }
 
         protected void btnVolverGrilla_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Gerente.aspx");
+            Empleados emp = Session["empleado"] as Empleados;
+
+            if (emp.RolEmpleado.Nombre_rol.ToUpper() == "MESERO")
+            {
+                Response.Redirect("Mesero.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("Gerente.aspx", false);
+            }
         }
 
         private void LimpiarFormulario()

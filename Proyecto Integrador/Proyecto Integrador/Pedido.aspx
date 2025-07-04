@@ -54,9 +54,10 @@
 
     <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger fw-bold" Visible="false" />
 
-    <div class="mb-3 d-flex gap-2">
-        <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
-        <asp:Button ID="btnCancelarPedido" runat="server" Text="Cancelar Pedido" CssClass="btn btn-danger" OnClick="btnCancelarPedido_Click" Visible="false" />
-    </div>
+   <div class="mb-3 d-flex gap-2">
+    <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
+    <asp:Button ID="btnCancelarPedido" runat="server" Text="Cancelar Pedido" CssClass="btn btn-danger" OnClick="btnCancelarPedido_Click" Visible="false" />
+    <asp:Button ID="btnFinalizarPedido" runat="server" Text="Finalizar Pedido" CssClass="btn btn-success" OnClick="btnFinalizarPedido_Click" Visible="false" />
+</div>
 
 </asp:Content>

@@ -70,6 +70,7 @@
     <Content Include="ABM_Insumos.aspx" />
     <Content Include="ABM_MediosDePago.aspx" />
     <Content Include="ABM_Roles.aspx" />
+    <Content Include="Cobrar.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Gerente.aspx" />
     <Content Include="Global.asax" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="ABM_Roles.aspx.designer.cs">
       <DependentUpon>ABM_Roles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cobrar.aspx.cs">
+      <DependentUpon>Cobrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cobrar.aspx.designer.cs">
+      <DependentUpon>Cobrar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -141,7 +141,7 @@
     >
     <Columns>
         <asp:BoundField DataField="Id_Pedido" HeaderText="ID Pedido" />
-        <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy}" />
+       <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha Pedido" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
         <asp:BoundField DataField="Nro_Pedido" HeaderText="Pedido Número" />
         <asp:TemplateField HeaderText="Estado">
             <ItemTemplate>

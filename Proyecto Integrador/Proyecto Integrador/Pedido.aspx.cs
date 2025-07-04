@@ -44,7 +44,6 @@ namespace Proyecto_Integrador
 
                 lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
-                // buscar si ya hay pedido activo
                 L_Pedidos logicaPedidos = new L_Pedidos();
                 IdPedido = logicaPedidos.ObtenerPedidoActivo(IdMesa);
 
@@ -52,10 +51,12 @@ namespace Proyecto_Integrador
                 {
                     Session["IdPedido"] = IdPedido;
                     btnCancelarPedido.Visible = true;
+                    btnFinalizarPedido.Visible = true;
                 }
                 else
                 {
                     btnCancelarPedido.Visible = false;
+                    btnFinalizarPedido.Visible = false;
                 }
 
                 CargarInsumosDisponibles();
@@ -70,6 +71,7 @@ namespace Proyecto_Integrador
                     IdMesa = (int)Session["IdMesa"];
 
                 btnCancelarPedido.Visible = Session["IdPedido"] != null;
+                btnFinalizarPedido.Visible = Session["IdPedido"] != null;
             }
         }
 
@@ -246,6 +248,7 @@ namespace Proyecto_Integrador
                 IdPedido = CrearPedidoNuevo(IdMesa, nroLegajo);
                 Session["IdPedido"] = IdPedido;
                 btnCancelarPedido.Visible = true;
+                btnFinalizarPedido.Visible = true;
             }
             else
             {
@@ -322,25 +325,25 @@ namespace Proyecto_Integrador
 
                 try
                 {
-                    
+
                     List<ItemPedidos> items = l_ItemPedidos.ListarPorPedido(idPedido);
 
-                   
+
                     foreach (ItemPedidos item in items)
                     {
                         l_Insumos.ActualizarStockInsumo(item.Sku, -item.Cantidad);
                     }
 
-                   
+
                     foreach (ItemPedidos item in items)
                     {
                         l_ItemPedidos.Eliminar(item.Id_item, idPedido);
                     }
 
-                   
+
                     l_Pedidos.Eliminar(idPedido);
 
-                    
+
                     if (Session["IdMesa"] != null)
                     {
                         int idMesa = (int)Session["IdMesa"];
@@ -368,13 +371,16 @@ namespace Proyecto_Integrador
             }
         }
 
-
-
-
-
-
+        protected void btnFinalizarPedido_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Cobrar.aspx", false);
+        }
 
 
 
     }
 }
+
+
+
+

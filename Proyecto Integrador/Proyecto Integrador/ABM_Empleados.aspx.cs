@@ -92,10 +92,14 @@ namespace Proyecto_Integrador
         private void CargarTodosLosEmpleados()
         {
             L_Empleados logica = new L_Empleados();
-            EmpleadosEnMemoria = logica.ListarEmpleados();
-            gvEmpleados.DataSource = EmpleadosEnMemoria;
-            gvEmpleados.DataBind();
+            List<Empleados> todos = logica.ListarEmpleados();
 
+            // Filtrar solo empleados con id_rol == 1
+            List<Empleados> soloRol1 = todos.Where(x => x.RolEmpleado.id_rol != 1).ToList();
+            
+            EmpleadosEnMemoria = soloRol1;
+            gvEmpleados.DataSource = soloRol1;
+            gvEmpleados.DataBind();
         }
 
         protected void Filtro_TextChanged(object sender, EventArgs e)
