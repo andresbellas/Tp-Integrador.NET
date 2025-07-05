@@ -298,6 +298,9 @@ namespace Proyecto_Integrador
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
+            
+            Session.Remove("IdPedido");
+
             Empleados empleado = Session["empleado"] as Empleados;
             if (empleado != null)
             {
@@ -314,7 +317,6 @@ namespace Proyecto_Integrador
                 Response.Redirect("Default.aspx");
             }
         }
-
 
 
         protected void btnCancelarPedido_Click(object sender, EventArgs e)
